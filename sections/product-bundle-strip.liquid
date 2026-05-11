@@ -1,0 +1,180 @@
+<section class="section product-bundle-strip surface-muted" data-product-bundle-strip {{ section.shopify_attributes }}>
+  <div class="container">
+    <p class="product-bundle-strip__intro text-secondary">{{ section.settings.intro_text }}</p>
+
+    <div class="product-bundle-strip__row">
+      <div class="product-bundle-strip__tiers" role="tablist" aria-label="{{ section.settings.tiers_label }}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'tier' -%}
+            <a
+              class="product-bundle-strip__tier{% if block.settings.is_active %} is-active{% endif %}"
+              href="{{ block.settings.url }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="product-bundle-strip__tier-title">{{ block.settings.title }}</span>
+              <span class="product-bundle-strip__tier-sub text-secondary">{{ block.settings.subtitle }}</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="product-bundle-strip__badge">
+        <span class="badge badge--accent">{{ section.settings.status_badge }}</span>
+      </div>
+    </div>
+
+    {%- if section.settings.secondary_cta_text != blank and section.settings.secondary_cta_url != blank -%}
+      <div class="product-bundle-strip__cta">
+        <a class="btn btn--ghost" href="{{ section.settings.secondary_cta_url }}">{{ section.settings.secondary_cta_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .product-bundle-strip__intro {
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+
+  .product-bundle-strip__row {
+    display: grid;
+    gap: 12px;
+    align-items: center;
+  }
+
+  @media (min-width: 990px) {
+    .product-bundle-strip__row {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  .product-bundle-strip__tiers {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 750px) {
+    .product-bundle-strip__tiers {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .product-bundle-strip__tier {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 10px 12px;
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    gap: 4px;
+    text-align: center;
+    background: var(--color-page-bg);
+  }
+
+  .product-bundle-strip__tier.is-active {
+    background: var(--color-cta-bg);
+    color: var(--color-cta-text);
+    border-color: var(--color-cta-bg);
+  }
+
+  .product-bundle-strip__tier.is-active .product-bundle-strip__tier-sub {
+    opacity: 0.75;
+  }
+
+  .product-bundle-strip__tier-title {
+    font-weight: 800;
+    font-size: 13px;
+  }
+
+  .product-bundle-strip__tier-sub {
+    font-size: 12px;
+  }
+
+  .product-bundle-strip__cta {
+    margin-top: 12px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.product_bundle_strip.name",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "intro_text",
+      "label": "t:sections.product_bundle_strip.settings.intro.label",
+      "default": "Bundle and save more — add more titles and unlock bigger discounts."
+    },
+    {
+      "type": "text",
+      "id": "tiers_label",
+      "label": "t:sections.product_bundle_strip.settings.tiers_label.label",
+      "default": "Bundle tiers"
+    },
+    {
+      "type": "text",
+      "id": "status_badge",
+      "label": "t:sections.product_bundle_strip.settings.badge.label",
+      "default": "Currently saving 40%"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "t:sections.product_bundle_strip.settings.secondary_cta_text.label",
+      "default": "Add more books"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_url",
+      "label": "t:sections.product_bundle_strip.settings.secondary_cta_url.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "t:sections.product_bundle_strip.blocks.tier.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.product_bundle_strip.blocks.tier.settings.title.label",
+          "default": "1 book · 10% off"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "t:sections.product_bundle_strip.blocks.tier.settings.subtitle.label",
+          "default": "Starter"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "t:sections.product_bundle_strip.blocks.tier.settings.url.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_active",
+          "label": "t:sections.product_bundle_strip.blocks.tier.settings.active.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_bundle_strip.presets.name",
+      "blocks": [
+        { "type": "tier", "settings": { "title": "1 book · 10% off" } },
+        { "type": "tier", "settings": { "title": "2 books · 25% off" } },
+        { "type": "tier", "settings": { "title": "3 books · 40% off", "is_active": true } },
+        { "type": "tier", "settings": { "title": "5 books · 50% off" } }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

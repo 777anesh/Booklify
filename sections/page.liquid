@@ -1,17 +1,95 @@
-{% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
+{% doc %}
+  Renders a standard page with Booklify typography and optional eyebrow.
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/page
-{% endcomment %}
+  @example
+  Used by templates/page.json
+{% enddoc %}
 
-<h1>{{ page.title }}</h1>
+<section class="section page-main" {{ section.shopify_attributes }}>
+  <div class="container">
+    {%- if section.settings.show_breadcrumb -%}
+      {% render 'breadcrumb' %}
+    {%- endif -%}
 
-{{ page.content }}
+    <div class="page-main__inner page-main__inner--{{ section.settings.content_width }}">
+      {%- if section.settings.top_label != blank -%}
+        <p class="section__label">{{ section.settings.top_label }}</p>
+      {%- endif -%}
+
+      <h1 class="page-main__title">{{ page.title }}</h1>
+
+      <div class="page-main__content rte">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .page-main__inner {
+    margin-inline: auto;
+  }
+
+  .page-main__inner--narrow {
+    max-width: 42rem;
+  }
+
+  .page-main__inner--medium {
+    max-width: 52rem;
+  }
+
+  .page-main__inner--wide {
+    max-width: 72rem;
+  }
+
+  .page-main__title {
+    font-size: clamp(28px, 3.6vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .page-main__content {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+
+  .page-main__content h2,
+  .page-main__content h3 {
+    color: var(--color-text-primary);
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.page",
-  "settings": []
+  "name": "t:sections.page_main.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "t:sections.page_main.settings.breadcrumb.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "top_label",
+      "label": "t:sections.page_main.settings.label.label",
+      "default": "Information"
+    },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:sections.page_main.settings.max_width.label",
+      "default": "medium",
+      "options": [
+        { "value": "narrow", "label": "t:sections.page_main.settings.max_width.options.narrow" },
+        { "value": "medium", "label": "t:sections.page_main.settings.max_width.options.medium" },
+        { "value": "wide", "label": "t:sections.page_main.settings.max_width.options.wide" }
+      ]
+    }
+  ]
 }
 {% endschema %}

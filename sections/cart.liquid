@@ -1,37 +1,105 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+<section class="section cart-page" {{ section.shopify_attributes }}>
+  <div class="container">
+    <h1 class="cart-page__title">{{ 'cart.title' | t }}</h1>
+    <p class="text-secondary">{{ 'cart.page_note' | t }}</p>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+    <form class="cart-page__form" action="{{ routes.cart_url }}" method="post">
+      {%- if cart.item_count == 0 -%}
+        <p class="text-secondary">{{ 'cart.empty' | t }}</p>
+        <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">{{ '404.back_to_shopping' | t }}</a>
+      {%- else -%}
+        <div class="cart-page__lines">
+          {%- for item in cart.items -%}
+            <div class="cart-line">
+              <div class="cart-line__media">
+                {%- if item.image -%}
+                  <a href="{{ item.url }}">{{ item.image | image_url: width: 220 | image_tag: loading: 'lazy', alt: item.title }}</a>
+                {%- endif -%}
+              </div>
+              <div class="cart-line__main">
+                <a class="cart-line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                <div class="text-muted">{{ item.variant.title }}</div>
+                <div class="cart-line__meta">
+                  <a class="text-secondary" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+                </div>
+              </div>
+              <div class="cart-line__qty">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="{{ 'cart.quantity' | t }}">
+              </div>
+              <div class="cart-line__price">
+                <strong>{{ item.final_line_price | money }}</strong>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
 
-<h1>{{ 'cart.title' | t }}</h1>
+        <div class="cart-page__actions">
+          <button type="submit" name="update" class="btn btn--ghost">{{ 'cart.update' | t }}</button>
+          <button type="submit" name="checkout" class="btn btn--primary">{{ 'cart.checkout' | t }}</button>
+        </div>
+      {%- endif -%}
+    </form>
+  </div>
+</section>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+{% stylesheet %}
+  .cart-page__title {
+    font-size: clamp(26px, 3vw, 36px);
+    margin-bottom: 8px;
+  }
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+  .cart-page__lines {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .cart-line {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 90px 1fr;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    align-items: start;
+  }
+
+  @media (min-width: 750px) {
+    .cart-line {
+      grid-template-columns: 110px 1fr 140px 120px;
+      align-items: center;
+    }
+  }
+
+  .cart-line__media img {
+    width: 100%;
+    border-radius: var(--radius-sm);
+  }
+
+  .cart-line__title {
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .cart-line__qty input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .cart-page__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.cart",
+  "name": "t:sections.cart_page.name",
   "settings": []
 }
 {% endschema %}

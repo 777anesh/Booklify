@@ -1,12 +1,33 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
-  "current": {}
+  "current": {
+    "brand_name": "Booklify",
+    "color_accent": "#EF9F27",
+    "color_accent_dark": "#633806",
+    "color_cta_bg": "#1a1a1a",
+    "color_cta_text": "#f5f5f5",
+    "color_page_bg": "#ffffff",
+    "color_surface": "#F1EFE8",
+    "color_text_primary": "#1a1a1a",
+    "color_text_secondary": "#5a5a5a",
+    "color_text_muted": "#9a9a9a",
+    "color_border": "#e5e5e5",
+    "color_announcement_bg": "#FAEEDA",
+    "color_announcement_text": "#633806",
+    "container_max_width": 1200,
+    "page_padding": 24,
+    "enable_urgency": true,
+    "sale_end_datetime": "",
+    "selling_fast_threshold": 20,
+    "free_shipping_threshold": "35",
+    "shipping_cutoff_time": "2PM",
+    "return_window_days": "30",
+    "metafield_author_key": "book.author",
+    "metafield_subtitle_key": "book.subtitle",
+    "metafield_whats_included_key": "book.whats_included",
+    "metafield_publisher_key": "book.publisher_details",
+    "metafield_rating_key": "reviews.rating",
+    "metafield_rating_count_key": "reviews.rating_count",
+    "metafield_sold_count_key": "book.sold_count",
+    "metafield_selling_fast_key": "booklify.selling_fast"
+  }
 }

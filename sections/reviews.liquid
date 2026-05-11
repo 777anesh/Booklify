@@ -1,0 +1,331 @@
+<section class="section reviews" id="reviews" {{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_label != blank -%}
+        <p class="section__label">{{ section.settings.section_label }}</p>
+      {%- endif -%}
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.section_subheading != blank -%}
+        <p class="section__subheading">{{ section.settings.section_subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.settings.layout_mode == 'product' -%}
+      <div class="reviews__aggregate">
+        <div class="reviews__aggregate-score">
+          <div class="reviews__big">{{ section.settings.aggregate_rating }}</div>
+          <div class="reviews__stars" aria-hidden="true">★★★★★</div>
+          <div class="text-secondary">{{ section.settings.aggregate_count }}</div>
+        </div>
+
+        <div class="reviews__bars" aria-label="{{ 'sections.reviews.rating_breakdown' | t }}">
+          {%- assign bars = '5,4,3,2,1' | split: ',' -%}
+          {%- for star in bars -%}
+            {%- capture pct_key -%}bar_{{ star }}_percent{%- endcapture -%}
+            {%- assign pct = section.settings[pct_key] | default: 0 -%}
+            <div class="reviews__bar-row">
+              <span class="reviews__bar-label">{{ star }}★</span>
+              <div class="reviews__bar">
+                <span style="width: {{ pct }}%;"></span>
+              </div>
+              <span class="reviews__bar-pct text-muted">{{ pct }}%</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="reviews__grid reviews__grid--{{ section.settings.layout_mode }}">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'review' -%}
+            <div {{ block.shopify_attributes }}>
+              {%- liquid
+                assign show_product_line = false
+                if section.settings.layout_mode == 'product'
+                  assign show_product_line = true
+                endif
+              -%}
+              {% render 'review-card',
+                reviewer_name: block.settings.reviewer_name,
+                reviewer_location: block.settings.reviewer_location,
+                review_text: block.settings.review_text,
+                review_rating: block.settings.review_rating,
+                show_product: show_product_line,
+                review_product: block.settings.review_product,
+                reviewer_photo: block.settings.reviewer_photo
+              %}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_load_more -%}
+      <div class="reviews__more">
+        <button type="button" class="btn btn--ghost" data-reviews-load-more>{{ 'sections.reviews.load_more' | t }}</button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .reviews__grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .reviews__grid--default {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 750px) {
+    .reviews__grid--default {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .reviews__grid--product {
+    grid-template-columns: 1fr;
+    scroll-snap-type: x mandatory;
+    overflow: auto;
+    display: flex;
+    gap: 12px;
+    padding-bottom: 6px;
+  }
+
+  @media (min-width: 990px) {
+    .reviews__grid--product {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      overflow: visible;
+    }
+  }
+
+  .reviews__grid--product > div {
+    min-width: min(420px, 85vw);
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 990px) {
+    .reviews__grid--product > div {
+      min-width: 0;
+    }
+  }
+
+  .reviews__aggregate {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 22px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    background: var(--color-surface);
+  }
+
+  @media (min-width: 990px) {
+    .reviews__aggregate {
+      grid-template-columns: 220px 1fr;
+      align-items: center;
+    }
+  }
+
+  .reviews__big {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .reviews__stars {
+    color: var(--color-accent);
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+
+  .reviews__bar-row {
+    display: grid;
+    grid-template-columns: 34px 1fr 44px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .reviews__bar {
+    height: 8px;
+    background: #e8e8e8;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .reviews__bar span {
+    display: block;
+    height: 100%;
+    background: var(--color-cta-bg);
+    border-radius: 999px;
+  }
+
+  .reviews__more {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.reviews.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_mode",
+      "label": "t:sections.reviews.settings.layout.label",
+      "default": "default",
+      "options": [
+        { "value": "default", "label": "t:sections.reviews.settings.layout.options.default" },
+        { "value": "product", "label": "t:sections.reviews.settings.layout.options.product" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.reviews.settings.label.label",
+      "default": "Reader love"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.reviews.settings.heading.label",
+      "default": "Real readers. Real results."
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "t:sections.reviews.settings.subheading.label",
+      "default": "1,400+ verified reviews — and counting."
+    },
+    {
+      "type": "text",
+      "id": "aggregate_rating",
+      "label": "t:sections.reviews.settings.aggregate_rating.label",
+      "default": "4.9 / 5"
+    },
+    {
+      "type": "text",
+      "id": "aggregate_count",
+      "label": "t:sections.reviews.settings.aggregate_count.label",
+      "default": "1,412 reviews"
+    },
+    {
+      "type": "range",
+      "id": "bar_5_percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "t:sections.reviews.settings.bar_5.label",
+      "default": 78
+    },
+    {
+      "type": "range",
+      "id": "bar_4_percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "t:sections.reviews.settings.bar_4.label",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "bar_3_percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "t:sections.reviews.settings.bar_3.label",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "bar_2_percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "t:sections.reviews.settings.bar_2.label",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "bar_1_percent",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "t:sections.reviews.settings.bar_1.label",
+      "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_load_more",
+      "label": "t:sections.reviews.settings.load_more.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "t:sections.reviews.blocks.review.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "t:sections.reviews.blocks.review.settings.name.label",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_location",
+          "label": "t:sections.reviews.blocks.review.settings.location.label",
+          "default": "Austin, TX"
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "t:sections.reviews.blocks.review.settings.text.label",
+          "default": "Shipping was fast and the packaging was perfect."
+        },
+        {
+          "type": "range",
+          "id": "review_rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "t:sections.reviews.blocks.review.settings.rating.label",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "review_product",
+          "label": "t:sections.reviews.blocks.review.settings.product.label",
+          "default": "The Midnight Library"
+        },
+        {
+          "type": "image_picker",
+          "id": "reviewer_photo",
+          "label": "t:sections.reviews.blocks.review.settings.photo.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.reviews.presets.default",
+      "settings": {
+        "layout_mode": "default"
+      },
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}

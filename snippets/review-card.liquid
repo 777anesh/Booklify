@@ -1,0 +1,97 @@
+{% doc %}
+  Renders a testimonial card.
+
+  @param {string} reviewer_name
+  @param {string} reviewer_location
+  @param {string} review_text
+  @param {number} review_rating
+  @param {boolean} [show_product]
+  @param {string} [review_product]
+  @param {object} [reviewer_photo]
+
+  @example
+  {% render 'review-card', reviewer_name: 'Sam', reviewer_location: 'TX', review_text: 'Great', review_rating: 5 %}
+{% enddoc %}
+
+{%- liquid
+  assign stars = review_rating | default: 5
+-%}
+
+<article class="review-card">
+  <div class="review-card__stars" aria-hidden="true">
+    {%- for i in (1..5) -%}
+      {%- if i <= stars -%}
+        ★
+      {%- else -%}
+        <span class="text-muted">★</span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <p class="review-card__quote">“{{ review_text }}”</p>
+
+  <div class="review-card__meta text-secondary">
+    <span class="review-card__name">{{ reviewer_name }}</span>
+    {%- if reviewer_location != blank -%}
+      <span class="review-card__sep">—</span>
+      <span>{{ reviewer_location }}</span>
+    {%- endif -%}
+    {%- if show_product and review_product != blank -%}
+      <div class="review-card__product text-muted">{{ review_product }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="review-card__badge badge badge--success">{{ 'sections.reviews.verified_buyer' | t }}</div>
+
+  {%- if reviewer_photo != blank -%}
+    <div class="review-card__photo">
+      {{ reviewer_photo | image_url: width: 120 | image_tag: loading: 'lazy', alt: reviewer_name }}
+    </div>
+  {%- endif -%}
+</article>
+
+{% stylesheet %}
+  .review-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    background: var(--color-page-bg);
+    display: grid;
+    gap: 10px;
+    height: 100%;
+  }
+
+  .review-card__stars {
+    color: var(--color-accent);
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+
+  .review-card__quote {
+    font-size: 14px;
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--color-text-primary);
+  }
+
+  .review-card__meta {
+    font-size: 13px;
+  }
+
+  .review-card__name {
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .review-card__product {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .review-card__photo img {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    object-fit: cover;
+  }
+{% endstylesheet %}

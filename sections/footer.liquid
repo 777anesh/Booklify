@@ -1,56 +1,230 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+<footer class="site-footer" {{ section.shopify_attributes }}>
+  <div class="container site-footer__top">
+    <div class="site-footer__brand">
+      <div class="site-footer__name">{{ section.settings.footer_tagline }}</div>
+      <div class="site-footer__trust text-secondary">{{ section.settings.footer_trust_line }}</div>
+
+      <div class="site-footer__social">
+        {%- if section.settings.social_instagram != blank -%}
+          <a href="{{ section.settings.social_instagram }}">Instagram</a>
+        {%- endif -%}
+        {%- if section.settings.social_tiktok != blank -%}
+          <a href="{{ section.settings.social_tiktok }}">TikTok</a>
+        {%- endif -%}
+        {%- if section.settings.social_facebook != blank -%}
+          <a href="{{ section.settings.social_facebook }}">Facebook</a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="site-footer__menus">
+      {%- if section.settings.menu_1 != blank -%}
+        <div class="site-footer__menu">
+          <ul>
+            {%- for link in section.settings.menu_1.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.menu_2 != blank -%}
+        <div class="site-footer__menu">
+          <ul>
+            {%- for link in section.settings.menu_2.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.menu_3 != blank -%}
+        <div class="site-footer__menu">
+          <ul>
+            {%- for link in section.settings.menu_3.links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  <div class="site-footer__bottom container">
+    <div class="site-footer__copy text-secondary">
+      © {{ 'now' | date: '%Y' }}
+      {{ shop.name }} · {{ powered_by_link }}
+    </div>
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+    {%- if section.settings.show_payment_icons -%}
+      <div class="site-footer__payments" aria-label="{{ 'footer.payments' | t }}">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    margin-top: 40px;
+    padding: 32px 0 26px;
+    background: var(--color-page-bg);
   }
-  footer a {
+
+  .site-footer__top {
+    display: grid;
+    gap: 22px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 990px) {
+    .site-footer__top {
+      grid-template-columns: 1.1fr 1.4fr;
+      align-items: start;
+    }
+  }
+
+  .site-footer__name {
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .site-footer__trust {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .site-footer__social {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+
+  .site-footer__social a {
+    color: inherit;
+  }
+
+  .site-footer__menus {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 750px) {
+    .site-footer__menus {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .site-footer__menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .site-footer__menu a {
+    color: var(--color-text-secondary);
     text-decoration: none;
-    color: var(--color-foreground);
+    font-size: 13px;
   }
-  footer .footer__links,
-  footer .footer__payment {
+
+  .site-footer__menu a:hover {
+    text-decoration: underline;
+    color: var(--color-text-primary);
+  }
+
+  .site-footer__bottom {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-border);
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 750px) {
+    .site-footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .site-footer__copy {
+    font-size: 12px;
+  }
+
+  .site-footer__payments {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .site-footer__payments svg {
+    height: 22px;
+    width: auto;
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "t:sections.footer.name",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "type": "text",
+      "id": "footer_tagline",
+      "label": "t:sections.footer.settings.tagline.label",
+      "default": "Booklify — more books. Less spending. Always."
+    },
+    {
+      "type": "textarea",
+      "id": "footer_trust_line",
+      "label": "t:sections.footer.settings.trust.label",
+      "default": "Secure payments · Free returns · US-based warehouse"
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
+      "label": "t:sections.footer.settings.payments.label",
       "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "menu_1",
+      "label": "t:sections.footer.settings.menu_1.label"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_2",
+      "label": "t:sections.footer.settings.menu_2.label"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_3",
+      "label": "t:sections.footer.settings.menu_3.label"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram",
+      "label": "t:sections.footer.settings.instagram.label"
+    },
+    {
+      "type": "url",
+      "id": "social_tiktok",
+      "label": "t:sections.footer.settings.tiktok.label"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook",
+      "label": "t:sections.footer.settings.facebook.label"
     }
   ]
 }

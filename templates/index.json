@@ -1,20 +1,82 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "hero_layout": "image_right"
+      }
+    },
+    "stats": {
+      "type": "stats-strip",
+      "settings": {}
+    },
+    "collection_showcase": {
+      "type": "collection-showcase",
+      "settings": {},
+      "blocks": {},
+      "block_order": []
+    },
+    "bundle_deals": {
+      "type": "bundle-deals",
+      "settings": {
+        "discount_code_prefix": ""
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "settings": {},
+      "blocks": {},
+      "block_order": []
+    },
+    "bestsellers": {
+      "type": "bestseller-grid",
+      "settings": {
+        "columns_desktop": "4",
+        "products_to_show": 8
+      }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "settings": {},
+      "blocks": {},
+      "block_order": []
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": {
+        "layout_mode": "default"
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {},
+      "blocks": {},
+      "block_order": []
+    },
+    "featured": {
+      "type": "featured-product",
+      "settings": {}
+    },
+    "email": {
+      "type": "email-capture",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "hero",
+    "stats",
+    "collection_showcase",
+    "bundle_deals",
+    "how_it_works",
+    "bestsellers",
+    "trust",
+    "reviews",
+    "faq",
+    "featured",
+    "email"
   ]
 }

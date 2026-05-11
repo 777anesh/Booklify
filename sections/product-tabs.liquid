@@ -1,0 +1,163 @@
+{%- liquid
+  assign mf_wi = settings.metafield_whats_included_key | split: '.'
+  assign mf_pub = settings.metafield_publisher_key | split: '.'
+  assign whats_included = product.metafields[mf_wi[0]][mf_wi[1]]
+  assign publisher = product.metafields[mf_pub[0]][mf_pub[1]]
+-%}
+
+<section class="section product-tabs" data-product-tabs {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="product-tabs__bar" role="tablist" aria-label="{{ section.settings.tabs_label }}">
+      <button type="button" class="product-tabs__tab is-active" role="tab" aria-selected="true" data-tab="about">
+        {{ section.settings.tab_about_label }}
+      </button>
+      <button type="button" class="product-tabs__tab" role="tab" aria-selected="false" data-tab="included">
+        {{ section.settings.tab_included_label }}
+      </button>
+      <button type="button" class="product-tabs__tab" role="tab" aria-selected="false" data-tab="shipping">
+        {{ section.settings.tab_shipping_label }}
+      </button>
+      <button type="button" class="product-tabs__tab" role="tab" aria-selected="false" data-tab="publisher">
+        {{ section.settings.tab_publisher_label }}
+      </button>
+    </div>
+
+    <div class="product-tabs__panels">
+      <div class="product-tabs__panel is-active" role="tabpanel" data-panel="about">
+        <div class="rte">{{ product.description }}</div>
+      </div>
+
+      <div class="product-tabs__panel" role="tabpanel" data-panel="included" hidden>
+        <div class="rte">
+          {%- if whats_included != blank -%}
+            {{ whats_included | metafield_tag }}
+          {%- else -%}
+            <p class="text-secondary">{{ section.settings.empty_included }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="product-tabs__panel" role="tabpanel" data-panel="shipping" hidden>
+        <div class="rte">
+          <p>
+            {{
+              section.settings.shipping_body
+              | replace: '[[cutoff]]', settings.shipping_cutoff_time
+              | replace: '[[returns]]', settings.return_window_days
+              | replace: '[[free]]', settings.free_shipping_threshold
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div class="product-tabs__panel" role="tabpanel" data-panel="publisher" hidden>
+        <div class="rte">
+          {%- if publisher != blank -%}
+            {{ publisher | metafield_tag }}
+          {%- else -%}
+            <p class="text-secondary">{{ section.settings.empty_publisher }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'section-product-tabs.js' | asset_url }}" defer></script>
+
+{% stylesheet %}
+  .product-tabs__bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 16px;
+  }
+
+  .product-tabs__tab {
+    border: 0;
+    background: transparent;
+    padding: 12px 10px;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+
+  .product-tabs__tab.is-active {
+    color: var(--color-text-primary);
+    border-color: var(--color-cta-bg);
+  }
+
+  .product-tabs__panel {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.product_tabs.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tabs_label",
+      "label": "t:sections.product_tabs.settings.tabs_label.label",
+      "default": "Product details"
+    },
+    {
+      "type": "text",
+      "id": "tab_about_label",
+      "label": "t:sections.product_tabs.settings.tab_about.label",
+      "default": "About this book"
+    },
+    {
+      "type": "text",
+      "id": "tab_included_label",
+      "label": "t:sections.product_tabs.settings.tab_included.label",
+      "default": "What's included"
+    },
+    {
+      "type": "text",
+      "id": "tab_shipping_label",
+      "label": "t:sections.product_tabs.settings.tab_shipping.label",
+      "default": "Shipping and returns"
+    },
+    {
+      "type": "text",
+      "id": "tab_publisher_label",
+      "label": "t:sections.product_tabs.settings.tab_publisher.label",
+      "default": "Publisher details"
+    },
+    {
+      "type": "textarea",
+      "id": "shipping_body",
+      "label": "t:sections.product_tabs.settings.shipping_body.label",
+      "default": "Orders before [[cutoff]] ship same business day when possible. Free shipping on orders over [[free]] (see checkout for details). Returns accepted within [[returns]] days.",
+      "info": "t:sections.product_tabs.settings.shipping_body.info"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_included",
+      "label": "t:sections.product_tabs.settings.empty_included.label",
+      "default": "Add a “what's included” metafield to highlight set contents."
+    },
+    {
+      "type": "textarea",
+      "id": "empty_publisher",
+      "label": "t:sections.product_tabs.settings.empty_publisher.label",
+      "default": "Add publisher details in a metafield to show them here."
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.product_tabs.presets.name"
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

@@ -72,6 +72,460 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
+    }
+  },
+  "icons": {
+    "package": "Package",
+    "truck": "Shipping",
+    "lock": "Secure",
+    "shield": "Shield",
+    "star": "Star",
+    "refresh": "Returns"
+  },
+  "sections": {
+    "header": {
+      "name": "Header",
+      "settings": {
+        "logo_image": { "label": "Logo image" },
+        "logo_text": { "label": "Logo text" },
+        "logo_max_width": { "label": "Logo max width" },
+        "sticky": { "label": "Enable sticky header" },
+        "menu": { "label": "Menu" }
+      }
     },
+    "announcement_bar": {
+      "name": "Announcement bar",
+      "presets": { "name": "Announcement bar" },
+      "settings": {
+        "enable": { "label": "Enable announcement bar" },
+        "style": {
+          "label": "Style",
+          "options": { "light": "Light", "dark": "Dark" }
+        },
+        "bg_light": { "label": "Background (light)" },
+        "text_light": { "label": "Text (light)" },
+        "bg_dark": { "label": "Background (dark)" },
+        "text_dark": { "label": "Text (dark)" },
+        "countdown": { "label": "Show countdown timer" },
+        "end_date": {
+          "label": "Sale end date/time (ISO)",
+          "info": "If empty, uses global sale end date from theme settings."
+        },
+        "message_1": { "label": "Message 1" },
+        "message_2": { "label": "Message 2" },
+        "message_3": { "label": "Message 3" },
+        "cta_text": { "label": "CTA text" },
+        "cta_url": { "label": "CTA URL" }
+      }
+    },
+    "category_strip": {
+      "name": "Category strip",
+      "presets": { "name": "Category strip" },
+      "settings": {
+        "label": { "label": "Accessible label" },
+        "menu": { "label": "Category menu" },
+        "sticky": { "label": "Sticky below header" },
+        "count": { "label": "Show product counts" }
+      }
+    },
+    "hero": {
+      "name": "Hero",
+      "presets": { "name": "Hero" },
+      "settings": {
+        "label": { "label": "Eyebrow label" },
+        "headline": { "label": "Headline" },
+        "subheadline": { "label": "Subheadline" },
+        "cta_primary_text": { "label": "Primary button text" },
+        "cta_primary_url": { "label": "Primary button URL" },
+        "cta_secondary_text": { "label": "Secondary button text" },
+        "cta_secondary_url": { "label": "Secondary button URL" },
+        "nudge_enable": { "label": "Show live nudge" },
+        "nudge_text": { "label": "Nudge text" },
+        "badge": { "label": "Image badge text" },
+        "image": { "label": "Image" },
+        "image_alt": { "label": "Image alt text" },
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "image_right": "Image right",
+            "image_left": "Image left",
+            "full": "Full width image"
+          }
+        }
+      }
+    },
+    "stats_strip": {
+      "name": "Stats strip",
+      "presets": { "name": "Stats strip" },
+      "settings": {
+        "stat_1_number": { "label": "Stat 1 number" },
+        "stat_1_label": { "label": "Stat 1 label" },
+        "stat_1_icon": { "label": "Stat 1 icon" },
+        "stat_2_number": { "label": "Stat 2 number" },
+        "stat_2_label": { "label": "Stat 2 label" },
+        "stat_2_icon": { "label": "Stat 2 icon" },
+        "stat_3_number": { "label": "Stat 3 number" },
+        "stat_3_label": { "label": "Stat 3 label" },
+        "stat_3_icon": { "label": "Stat 3 icon" },
+        "stat_4_number": { "label": "Stat 4 number" },
+        "stat_4_label": { "label": "Stat 4 label" },
+        "stat_4_icon": { "label": "Stat 4 icon" }
+      },
+      "icons": {
+        "users": "Community",
+        "star": "Reviews",
+        "truck": "Shipping",
+        "refresh": "Returns"
+      }
+    },
+    "collection_showcase": {
+      "name": "Collection showcase",
+      "presets": { "name": "Collection showcase" },
+      "settings": {
+        "label": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" }
+      },
+      "blocks": {
+        "collection": {
+          "name": "Collection",
+          "settings": {
+            "collection": { "label": "Collection" },
+            "title": { "label": "Title override" },
+            "count_label": {
+              "label": "Count label",
+              "info": "Use [[count]] where the product count should appear."
+            }
+          }
+        }
+      }
+    },
+    "bundle_deals": {
+      "name": "Bundle deals",
+      "presets": { "name": "Bundle deals" },
+      "settings": {
+        "label": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "discount_prefix": {
+          "label": "Discount code prefix",
+          "info": "Optional. Appends ?discount=PREFIX+QTY to tier URLs when set."
+        }
+      },
+      "blocks": {
+        "tier": {
+          "name": "Tier",
+          "settings": {
+            "qty": { "label": "Quantity" },
+            "title": { "label": "Title" },
+            "save": { "label": "Savings label" },
+            "from": { "label": "From price label" },
+            "featured": { "label": "Featured tier" },
+            "cta_text": { "label": "Button text" },
+            "cta_url": { "label": "Button URL" }
+          }
+        }
+      }
+    },
+    "how_it_works": {
+      "name": "How it works",
+      "presets": { "name": "How it works" },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "number": { "label": "Step number" },
+            "icon": { "label": "Icon" },
+            "title": { "label": "Title" },
+            "body": { "label": "Body" }
+          }
+        }
+      }
+    },
+    "bestseller_grid": {
+      "name": "Bestseller grid",
+      "presets": { "name": "Bestseller grid" },
+      "settings": {
+        "heading": { "label": "Heading" },
+        "collection": { "label": "Collection" },
+        "limit": { "label": "Products to show" },
+        "columns": { "label": "Desktop columns" },
+        "quick_add": { "label": "Quick add on hover" },
+        "selling_fast": { "label": "Selling fast badge" },
+        "threshold": { "label": "Selling fast threshold" }
+      }
+    },
+    "trust_badges": {
+      "name": "Trust badges",
+      "presets": { "name": "Trust badges" },
+      "blocks": {
+        "item": {
+          "name": "Badge",
+          "settings": {
+            "icon": { "label": "Icon" },
+            "title": { "label": "Title" },
+            "subtitle": { "label": "Subtitle" }
+          }
+        }
+      }
+    },
+    "reviews": {
+      "name": "Reviews",
+      "presets": { "default": "Reviews" },
+      "settings": {
+        "layout": {
+          "label": "Layout",
+          "options": {
+            "default": "Homepage grid",
+            "product": "Product page"
+          }
+        },
+        "label": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "aggregate_rating": { "label": "Aggregate rating label" },
+        "aggregate_count": { "label": "Aggregate count label" },
+        "bar_5": { "label": "5 star bar percent" },
+        "bar_4": { "label": "4 star bar percent" },
+        "bar_3": { "label": "3 star bar percent" },
+        "bar_2": { "label": "2 star bar percent" },
+        "bar_1": { "label": "1 star bar percent" },
+        "load_more": { "label": "Show load more button" }
+      },
+      "blocks": {
+        "review": {
+          "name": "Review",
+          "settings": {
+            "name": { "label": "Reviewer name" },
+            "location": { "label": "Reviewer location" },
+            "text": { "label": "Review text" },
+            "rating": { "label": "Star rating" },
+            "product": { "label": "Product name" },
+            "photo": { "label": "Reviewer photo" }
+          }
+        }
+      }
+    },
+    "faq": {
+      "name": "FAQ",
+      "presets": { "name": "FAQ" },
+      "settings": {
+        "label": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "mode": {
+          "label": "Accordion mode",
+          "options": {
+            "one": "One open at a time",
+            "many": "Multiple open"
+          }
+        }
+      },
+      "blocks": {
+        "item": {
+          "name": "Question",
+          "settings": {
+            "question": { "label": "Question" },
+            "answer": { "label": "Answer" }
+          }
+        }
+      }
+    },
+    "email_capture": {
+      "name": "Email capture",
+      "presets": { "name": "Email capture" },
+      "settings": {
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "placeholder": { "label": "Input placeholder" },
+        "cta": { "label": "Button text" },
+        "privacy": { "label": "Privacy text" },
+        "klaviyo": {
+          "label": "Klaviyo list ID",
+          "info": "Optional. Wire Klaviyo via your storefront scripts."
+        },
+        "background": { "label": "Background color" }
+      }
+    },
+    "footer": {
+      "name": "Footer",
+      "settings": {
+        "tagline": { "label": "Tagline" },
+        "trust": { "label": "Trust line" },
+        "payments": { "label": "Show payment icons" },
+        "menu_1": { "label": "Menu 1" },
+        "menu_2": { "label": "Menu 2" },
+        "menu_3": { "label": "Menu 3" },
+        "instagram": { "label": "Instagram URL" },
+        "tiktok": { "label": "TikTok URL" },
+        "facebook": { "label": "Facebook URL" }
+      }
+    },
+    "main_product": {
+      "name": "Main product",
+      "presets": { "name": "Main product" },
+      "settings": {
+        "kicker_fallback": { "label": "Fallback collection label" },
+        "sale_note_enable": { "label": "Show sale note" },
+        "sale_note": { "label": "Sale note" },
+        "trust_line": { "label": "Trust line" },
+        "sticky_trust": { "label": "Sticky bar trust text" }
+      },
+      "blocks": {
+        "bullet": {
+          "name": "Bullet",
+          "settings": {
+            "text": { "label": "Text" }
+          }
+        }
+      }
+    },
+    "product_bundle_strip": {
+      "name": "Product bundle strip",
+      "presets": { "name": "Product bundle strip" },
+      "settings": {
+        "intro": { "label": "Intro text" },
+        "tiers_label": { "label": "Tiers accessible label" },
+        "badge": { "label": "Status badge" },
+        "secondary_cta_text": { "label": "Secondary CTA text" },
+        "secondary_cta_url": { "label": "Secondary CTA URL" }
+      },
+      "blocks": {
+        "tier": {
+          "name": "Tier",
+          "settings": {
+            "title": { "label": "Title" },
+            "subtitle": { "label": "Subtitle" },
+            "url": { "label": "URL" },
+            "active": { "label": "Active tier" }
+          }
+        }
+      }
+    },
+    "product_tabs": {
+      "name": "Product tabs",
+      "presets": { "name": "Product tabs" },
+      "settings": {
+        "tabs_label": { "label": "Tabs accessible label" },
+        "tab_about": { "label": "About tab label" },
+        "tab_included": { "label": "Included tab label" },
+        "tab_shipping": { "label": "Shipping tab label" },
+        "tab_publisher": { "label": "Publisher tab label" },
+        "shipping_body": {
+          "label": "Shipping body",
+          "info": "Supports placeholders: [[cutoff]], [[returns]], [[free]]"
+        },
+        "empty_included": { "label": "Empty included fallback" },
+        "empty_publisher": { "label": "Empty publisher fallback" }
+      }
+    },
+    "related_products": {
+      "name": "Related products",
+      "presets": { "name": "Related products" },
+      "settings": {
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" },
+        "collection": {
+          "label": "Collection override",
+          "info": "Defaults to the current collection when available."
+        },
+        "limit": { "label": "Products to show" }
+      }
+    },
+    "featured_product": {
+      "name": "Featured product",
+      "presets": { "name": "Featured product" },
+      "settings": {
+        "label": { "label": "Eyebrow" },
+        "product": { "label": "Product" },
+        "stock": { "label": "Show low stock note" },
+        "urgency": { "label": "Show urgency badge" },
+        "badge_text": { "label": "Custom badge text" },
+        "trust": { "label": "Trust line" }
+      }
+    },
+    "collection_main": {
+      "name": "Collection",
+      "settings": {
+        "breadcrumb": { "label": "Show breadcrumb" },
+        "page_size": { "label": "Products per page" },
+        "sort": { "label": "Show sort dropdown" },
+        "quick_add": { "label": "Quick add on cards" }
+      }
+    },
+    "page_main": {
+      "name": "Page",
+      "settings": {
+        "breadcrumb": { "label": "Show breadcrumb" },
+        "label": { "label": "Eyebrow label" },
+        "max_width": {
+          "label": "Content width",
+          "options": {
+            "narrow": "Narrow",
+            "medium": "Medium",
+            "wide": "Wide"
+          }
+        }
+      }
+    },
+    "page_not_found": {
+      "name": "404 page",
+      "settings": {
+        "heading": { "label": "Heading" },
+        "message": { "label": "Message" },
+        "primary_text": { "label": "Primary button text" },
+        "primary_url": { "label": "Primary button URL" },
+        "secondary_text": { "label": "Secondary button text" },
+        "secondary_url": { "label": "Secondary button URL" }
+      }
+    },
+    "search_main": {
+      "name": "Search results",
+      "settings": {
+        "breadcrumb": { "label": "Show breadcrumb" },
+        "products_heading": { "label": "Products heading" },
+        "other_heading": { "label": "Pages and articles heading" }
+      }
+    },
+    "blog_listing": {
+      "name": "Blog",
+      "settings": {
+        "breadcrumb": { "label": "Show breadcrumb" },
+        "show_excerpt": { "label": "Show excerpt" },
+        "articles_per_page": { "label": "Articles per page" }
+      }
+    },
+    "article_main": {
+      "name": "Article",
+      "settings": {
+        "breadcrumb": { "label": "Show breadcrumb" },
+        "show_author_date": { "label": "Show author and date" },
+        "image_ratio": {
+          "label": "Featured image ratio",
+          "options": {
+            "landscape": "Landscape",
+            "square": "Square"
+          }
+        }
+      }
+    },
+    "collections_list": {
+      "name": "Collections list",
+      "settings": {
+        "breadcrumb": { "label": "Show breadcrumb" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" }
+      }
+    },
+    "password_main": {
+      "name": "Password content",
+      "settings": {
+        "heading": { "label": "Heading override" },
+        "intro": { "label": "Intro text" },
+        "button": { "label": "Submit button text" }
+      }
+    },
+    "cart_page": {
+      "name": "Cart"
+    }
   }
 }

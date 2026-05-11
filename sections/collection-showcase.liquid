@@ -1,0 +1,157 @@
+<section class="section collection-showcase" {{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_label != blank -%}
+        <p class="section__label">{{ section.settings.section_label }}</p>
+      {%- endif -%}
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.section_subheading != blank -%}
+        <p class="section__subheading">{{ section.settings.section_subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="collection-showcase__grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'collection' -%}
+              {%- assign c = block.settings.collection -%}
+              <a class="collection-card" href="{{ c.url }}" {{ block.shopify_attributes }}>
+                <div class="collection-card__media">
+                  {%- if c.featured_image -%}
+                    {{ c.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: c.featured_image.alt | default: c.title }}
+                  {%- else -%}
+                    <div class="collection-card__placeholder" aria-hidden="true"></div>
+                  {%- endif -%}
+                </div>
+                <div class="collection-card__body">
+                  <div class="collection-card__title">{{ block.settings.title | default: c.title }}</div>
+                  <div class="collection-card__meta text-muted">
+                    {{ block.settings.count_label | replace: '[[count]]', c.all_products_count }}
+                  </div>
+                </div>
+              </a>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="text-secondary">{{ 'sections.onboarding.collection_cards' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .collection-showcase__grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 990px) {
+    .collection-showcase__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .collection-card {
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .collection-card__media img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collection-card__placeholder {
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface);
+  }
+
+  .collection-card__body {
+    padding: 14px;
+  }
+
+  .collection-card__title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .collection-card__meta {
+    font-size: 13px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.collection_showcase.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.collection_showcase.settings.label.label",
+      "default": "Browse by type"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.collection_showcase.settings.heading.label",
+      "default": "Explore the collections"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "t:sections.collection_showcase.settings.subheading.label",
+      "default": "Pick a category and start building your next read stack."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "t:sections.collection_showcase.blocks.collection.name",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.collection_showcase.blocks.collection.settings.collection.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.collection_showcase.blocks.collection.settings.title.label"
+        },
+        {
+          "type": "text",
+          "id": "count_label",
+          "label": "t:sections.collection_showcase.blocks.collection.settings.count_label.label",
+          "default": "[[count]] titles",
+          "info": "t:sections.collection_showcase.blocks.collection.settings.count_label.info"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.collection_showcase.presets.name",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

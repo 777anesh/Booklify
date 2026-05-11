@@ -1,0 +1,132 @@
+{%- liquid
+  assign menu = section.settings.category_menu
+-%}
+
+{%- if menu != blank and menu.links.size > 0 -%}
+  <nav
+    class="category-strip{% if section.settings.enable_sticky %} category-strip--sticky{% endif %}"
+    aria-label="{{ section.settings.strip_label }}"
+    data-category-strip
+    {{ section.shopify_attributes }}
+  >
+    <div class="category-strip__inner">
+      {%- for link in menu.links -%}
+        <a
+          href="{{ link.url }}"
+          class="category-strip__item{% if link.active %} category-strip__item--active{% endif %}"
+          {% if link.active %}
+            aria-current="page"
+          {% endif %}
+        >
+          {{- link.title -}}
+          {%- if section.settings.show_item_count -%}
+            {%- if link.type == 'collection_link' and link.object -%}
+              <span class="category-strip__count">({{ link.object.products_count }})</span>
+            {%- endif -%}
+          {%- endif -%}
+        </a>
+        {%- unless forloop.last -%}
+          <span class="category-strip__sep" aria-hidden="true">|</span>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </nav>
+
+  <script src="{{ 'section-category-strip.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .category-strip {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-page-bg);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .category-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-strip--sticky {
+    position: sticky;
+    z-index: 100;
+    top: var(--header-height);
+  }
+
+  .category-strip__inner {
+    display: flex;
+    align-items: stretch;
+    padding: 0 var(--container-padding);
+    white-space: nowrap;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .category-strip__item {
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .category-strip__item:hover,
+  .category-strip__item--active {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-cta-bg);
+  }
+
+  .category-strip__sep {
+    color: var(--color-border);
+    padding: 10px 2px;
+    font-size: 12px;
+    align-self: center;
+    user-select: none;
+  }
+
+  .category-strip__count {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-left: 3px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.category_strip.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "strip_label",
+      "label": "t:sections.category_strip.settings.label.label",
+      "default": "Browse categories"
+    },
+    {
+      "type": "link_list",
+      "id": "category_menu",
+      "label": "t:sections.category_strip.settings.menu.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sticky",
+      "label": "t:sections.category_strip.settings.sticky.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_item_count",
+      "label": "t:sections.category_strip.settings.count.label",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.category_strip.presets.name"
+    }
+  ]
+}
+{% endschema %}

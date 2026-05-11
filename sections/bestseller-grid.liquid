@@ -1,0 +1,114 @@
+{%- liquid
+  assign coll = section.settings.collection
+-%}
+
+<section class="section bestseller-grid" {{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+    </header>
+
+    {%- if coll != blank -%}
+      {%- assign col_class = 'grid-4' -%}
+      {%- if section.settings.columns_desktop == '3' -%}
+        {%- assign col_class = 'bestseller-grid--3' -%}
+      {%- endif -%}
+
+      <div class="{{ col_class }} bestseller-grid__grid">
+        {%- for product in coll.products limit: section.settings.products_to_show -%}
+          <div>
+            {% render 'product-card',
+              product: product,
+              show_quick_add: section.settings.enable_quick_add,
+              enable_selling_fast: section.settings.enable_selling_fast_badge,
+              threshold: section.settings.selling_fast_threshold
+            %}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="text-secondary">{{ 'sections.onboarding.collection' | t }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .bestseller-grid__grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 990px) {
+    .bestseller-grid__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .bestseller-grid--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.bestseller_grid.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.bestseller_grid.settings.heading.label",
+      "default": "Right now's hottest reads"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.bestseller_grid.settings.collection.label"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "t:sections.bestseller_grid.settings.limit.label",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.bestseller_grid.settings.columns.label",
+      "default": "4",
+      "options": [
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "t:sections.bestseller_grid.settings.quick_add.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_selling_fast_badge",
+      "label": "t:sections.bestseller_grid.settings.selling_fast.label",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "selling_fast_threshold",
+      "label": "t:sections.bestseller_grid.settings.threshold.label",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.bestseller_grid.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,229 @@
+<section class="section bundle-deals" data-bundle-deals data-discount-prefix="{{ section.settings.discount_code_prefix | escape }}" {{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_label != blank -%}
+        <p class="section__label">{{ section.settings.section_label }}</p>
+      {%- endif -%}
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.section_subheading != blank -%}
+        <p class="section__subheading">{{ section.settings.section_subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="bundle-deals__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'tier' -%}
+            <div
+              class="bundle-tier{% if block.settings.tier_is_featured %} bundle-tier--featured{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.tier_is_featured -%}
+                <span class="bundle-tier__ribbon">{{ 'sections.bundle_deals.most_popular' | t }}</span>
+              {%- endif -%}
+
+              <div class="bundle-tier__qty">{{ block.settings.tier_title }}</div>
+              <div class="bundle-tier__save">{{ block.settings.tier_save_label }}</div>
+              <div class="bundle-tier__price text-secondary">{{ block.settings.tier_from_price }}</div>
+
+              <a
+                class="btn {% if block.settings.tier_is_featured %}btn--primary{% else %}btn--ghost{% endif %} btn--block"
+                href="{{ block.settings.tier_cta_url }}"
+                data-bundle-tier
+                data-tier-qty="{{ block.settings.tier_quantity }}"
+              >
+                {{ block.settings.tier_cta_text }}
+              </a>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'section-bundle-deals.js' | asset_url }}" defer></script>
+
+{% stylesheet %}
+  .bundle-deals__grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 990px) {
+    .bundle-deals__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .bundle-tier {
+    position: relative;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: grid;
+    gap: 10px;
+    background: var(--color-page-bg);
+  }
+
+  .bundle-tier--featured {
+    border: 2px solid var(--color-accent);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  }
+
+  .bundle-tier__ribbon {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent);
+    color: var(--color-accent-dark);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  .bundle-tier__qty {
+    font-weight: 800;
+    font-size: 16px;
+    margin-top: 8px;
+  }
+
+  .bundle-tier__save {
+    color: var(--color-accent-dark);
+    font-weight: 700;
+  }
+
+  .bundle-tier__price {
+    font-size: 13px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.bundle_deals.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.bundle_deals.settings.label.label",
+      "default": "Save more"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.bundle_deals.settings.heading.label",
+      "default": "The more you read, the more you save."
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "t:sections.bundle_deals.settings.subheading.label",
+      "default": "Build your bundle — mix genres, mix titles."
+    },
+    {
+      "type": "text",
+      "id": "discount_code_prefix",
+      "label": "t:sections.bundle_deals.settings.discount_prefix.label",
+      "info": "t:sections.bundle_deals.settings.discount_prefix.info"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "t:sections.bundle_deals.blocks.tier.name",
+      "settings": [
+        {
+          "type": "number",
+          "id": "tier_quantity",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.qty.label",
+          "default": 2
+        },
+        {
+          "type": "text",
+          "id": "tier_title",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.title.label",
+          "default": "Buy any 2"
+        },
+        {
+          "type": "text",
+          "id": "tier_save_label",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.save.label",
+          "default": "Save 25%"
+        },
+        {
+          "type": "text",
+          "id": "tier_from_price",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.from.label",
+          "default": "From $26.99"
+        },
+        {
+          "type": "checkbox",
+          "id": "tier_is_featured",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.featured.label",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tier_cta_text",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.cta_text.label",
+          "default": "Choose"
+        },
+        {
+          "type": "url",
+          "id": "tier_cta_url",
+          "label": "t:sections.bundle_deals.blocks.tier.settings.cta_url.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.bundle_deals.presets.name",
+      "blocks": [
+        {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 1,
+            "tier_title": "Buy any 1",
+            "tier_save_label": "Save 10%",
+            "tier_from_price": "From $12.99"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 2,
+            "tier_title": "Buy any 2",
+            "tier_save_label": "Save 25%",
+            "tier_from_price": "From $22.99"
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 3,
+            "tier_title": "Buy any 3",
+            "tier_save_label": "Save 40%",
+            "tier_from_price": "From $26.99",
+            "tier_is_featured": true
+          }
+        },
+        {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 5,
+            "tier_title": "Buy any 5",
+            "tier_save_label": "Save 50%",
+            "tier_from_price": "From $39.99"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

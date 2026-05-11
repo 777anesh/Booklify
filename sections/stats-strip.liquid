@@ -1,0 +1,168 @@
+<section class="section stats-strip surface-muted" data-stats-strip {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="stats-strip__grid">
+      {%- for i in (1..4) -%}
+        {%- capture stat_num -%}stat_{{ i }}_number{%- endcapture -%}
+        {%- capture stat_label -%}stat_{{ i }}_label{%- endcapture -%}
+        {%- capture stat_icon -%}stat_{{ i }}_icon{%- endcapture -%}
+        {%- assign num = section.settings[stat_num] -%}
+        {%- assign label = section.settings[stat_label] -%}
+        {%- assign icon = section.settings[stat_icon] -%}
+        <div class="stats-strip__item text-center">
+          <div class="stats-strip__icon" aria-hidden="true">
+            {% render 'icon-stat', name: icon %}
+          </div>
+          <div class="stats-strip__number">{{ num }}</div>
+          <div class="stats-strip__label text-secondary">{{ label }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .stats-strip__grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 990px) {
+    .stats-strip__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .stats-strip__item {
+    padding: 18px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .stats-strip__icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    color: var(--color-accent-dark);
+  }
+
+  .stats-strip__number {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .stats-strip__label {
+    font-size: 13px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.stats_strip.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "t:sections.stats_strip.settings.stat_1_number.label",
+      "default": "8,200+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "t:sections.stats_strip.settings.stat_1_label.label",
+      "default": "Happy readers"
+    },
+    {
+      "type": "select",
+      "id": "stat_1_icon",
+      "label": "t:sections.stats_strip.settings.stat_1_icon.label",
+      "default": "users",
+      "options": [
+        { "value": "users", "label": "t:sections.stats_strip.icons.users" },
+        { "value": "star", "label": "t:sections.stats_strip.icons.star" },
+        { "value": "truck", "label": "t:sections.stats_strip.icons.truck" },
+        { "value": "refresh", "label": "t:sections.stats_strip.icons.refresh" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "t:sections.stats_strip.settings.stat_2_number.label",
+      "default": "4.9 / 5"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "t:sections.stats_strip.settings.stat_2_label.label",
+      "default": "From 1,800+ reviews"
+    },
+    {
+      "type": "select",
+      "id": "stat_2_icon",
+      "label": "t:sections.stats_strip.settings.stat_2_icon.label",
+      "default": "star",
+      "options": [
+        { "value": "users", "label": "t:sections.stats_strip.icons.users" },
+        { "value": "star", "label": "t:sections.stats_strip.icons.star" },
+        { "value": "truck", "label": "t:sections.stats_strip.icons.truck" },
+        { "value": "refresh", "label": "t:sections.stats_strip.icons.refresh" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "t:sections.stats_strip.settings.stat_3_number.label",
+      "default": "Same day"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "t:sections.stats_strip.settings.stat_3_label.label",
+      "default": "Ships before 2PM"
+    },
+    {
+      "type": "select",
+      "id": "stat_3_icon",
+      "label": "t:sections.stats_strip.settings.stat_3_icon.label",
+      "default": "truck",
+      "options": [
+        { "value": "users", "label": "t:sections.stats_strip.icons.users" },
+        { "value": "star", "label": "t:sections.stats_strip.icons.star" },
+        { "value": "truck", "label": "t:sections.stats_strip.icons.truck" },
+        { "value": "refresh", "label": "t:sections.stats_strip.icons.refresh" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "stat_4_number",
+      "label": "t:sections.stats_strip.settings.stat_4_number.label",
+      "default": "30-day"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "t:sections.stats_strip.settings.stat_4_label.label",
+      "default": "Free returns"
+    },
+    {
+      "type": "select",
+      "id": "stat_4_icon",
+      "label": "t:sections.stats_strip.settings.stat_4_icon.label",
+      "default": "refresh",
+      "options": [
+        { "value": "users", "label": "t:sections.stats_strip.icons.users" },
+        { "value": "star", "label": "t:sections.stats_strip.icons.star" },
+        { "value": "truck", "label": "t:sections.stats_strip.icons.truck" },
+        { "value": "refresh", "label": "t:sections.stats_strip.icons.refresh" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.stats_strip.presets.name"
+    }
+  ]
+}
+{% endschema %}

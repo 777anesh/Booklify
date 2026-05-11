@@ -1,0 +1,239 @@
+{% doc %}
+  Renders the slide-out cart drawer shell and wires theme strings for `base.js`.
+
+  @example
+  {% render 'cart-drawer' %}
+{% enddoc %}
+
+<div
+  class="cart-drawer"
+  data-cart-drawer
+  data-free-shipping-threshold="{{ settings.free_shipping_threshold | escape }}"
+>
+  <script>
+    window.theme = window.theme || {};
+    window.theme.moneyFormat = {{ shop.money_format | json }};
+    window.theme.cartEmpty = {{ 'cart.drawer_empty' | t | json }};
+    window.theme.removeLabel = {{ 'cart.remove' | t | json }};
+    window.theme.freeShippingRemaining = {{ 'cart.free_shipping_remaining_html' | t | json }};
+    window.theme.freeShippingMet = {{ 'cart.free_shipping_met' | t | json }};
+  </script>
+
+  <dialog class="cart-drawer__dialog" data-cart-drawer-dialog aria-label="{{ 'cart.drawer_title' | t }}">
+    <div class="cart-drawer__overlay" data-cart-drawer-overlay tabindex="-1"></div>
+    <div class="cart-drawer__panel" role="document">
+      <header class="cart-drawer__header">
+        <h2 class="cart-drawer__heading">{{ 'cart.drawer_title' | t }}</h2>
+        <button type="button" class="cart-drawer__close" data-cart-close aria-label="{{ 'general.accessibility.close' | t }}">
+          {% render 'icon-close' %}
+        </button>
+      </header>
+
+      <div class="cart-drawer__upsell text-secondary" data-cart-upsell>
+        {{ 'cart.drawer_upsell' | t }}
+      </div>
+
+      <div class="cart-drawer__body" data-cart-drawer-body></div>
+
+      <footer class="cart-drawer__footer">
+        <div class="cart-drawer__shipping">
+          <div class="cart-drawer__progress" aria-hidden="true">
+            <div class="cart-drawer__progress-fill" data-cart-free-shipping style="width: 0%"></div>
+          </div>
+          <p class="cart-drawer__shipping-label text-secondary" data-cart-free-shipping-label></p>
+        </div>
+
+        <div class="cart-drawer__summary">
+          <span>{{ 'cart.subtotal' | t }}</span>
+          <strong data-cart-drawer-subtotal>{{ cart.total_price | money }}</strong>
+        </div>
+
+        <a class="btn btn--ghost btn--block" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="btn btn--primary btn--block">{{ 'cart.checkout' | t }}</button>
+        </form>
+
+        <p class="cart-drawer__trust text-secondary text-center">{{ 'cart.drawer_trust' | t }}</p>
+      </footer>
+    </div>
+  </dialog>
+</div>
+
+{% stylesheet %}
+  .cart-drawer__dialog {
+    padding: 0;
+    border: 0;
+    max-width: 100%;
+    width: min(440px, 100%);
+    height: 100%;
+    margin: 0 0 0 auto;
+    background: transparent;
+  }
+
+  .cart-drawer__dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .cart-drawer__panel {
+    background: var(--color-page-bg);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .cart-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cart-drawer__heading {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .cart-drawer__close {
+    border: 0;
+    background: transparent;
+    padding: 8px;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  .cart-drawer__upsell {
+    padding: 12px 18px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cart-drawer__body {
+    flex: 1;
+    overflow: auto;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cart-drawer__line {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .cart-drawer__thumb {
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+    aspect-ratio: 1;
+  }
+
+  .cart-drawer__thumb--placeholder {
+    background: var(--color-surface);
+  }
+
+  .cart-drawer__title {
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    font-size: 14px;
+  }
+
+  .cart-drawer__meta {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .cart-drawer__controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .cart-drawer__controls .qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .cart-drawer__controls .qty button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .cart-drawer__controls .link {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  .cart-drawer__price {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .cart-drawer__footer {
+    padding: 16px 18px 20px;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cart-drawer__shipping {
+    margin-bottom: 4px;
+  }
+
+  .cart-drawer__progress {
+    height: 6px;
+    background: var(--color-surface);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  .cart-drawer__progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    transition: width var(--transition-base);
+  }
+
+  .cart-drawer__shipping-label {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .cart-drawer__summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+  }
+
+  .cart-drawer__trust {
+    font-size: 12px;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  const dialog = document.querySelector('[data-cart-drawer-dialog]');
+  const closeBtn = document.querySelector('[data-cart-close]');
+  if (closeBtn && dialog) {
+    closeBtn.addEventListener('click', () => dialog.close());
+  }
+{% endjavascript %}

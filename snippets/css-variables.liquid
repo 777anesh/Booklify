@@ -1,18 +1,35 @@
 {% style %}
-  {% # Loads all font variantions with display: swap %}
-  {{ settings.type_primary_font | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-
   :root {
-    --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
-    --font-primary--style: {{ settings.type_primary_font.style }};
-    --font-primary--weight: {{ settings.type_primary_font.weight }};
-    --page-width: {{ settings.max_page_width }};
-    --page-margin: {{ settings.min_page_margin }}px;
-    --color-background: {{ settings.background_color }};
-    --color-foreground: {{ settings.foreground_color }};
-    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+    --color-page-bg: {{ settings.color_page_bg }};
+    --color-surface: {{ settings.color_surface }};
+    --color-accent: {{ settings.color_accent }};
+    --color-accent-dark: {{ settings.color_accent_dark }};
+    --color-cta-bg: {{ settings.color_cta_bg }};
+    --color-cta-text: {{ settings.color_cta_text }};
+    --color-text-primary: {{ settings.color_text_primary }};
+    --color-text-secondary: {{ settings.color_text_secondary }};
+    --color-text-muted: {{ settings.color_text_muted }};
+    --color-border: {{ settings.color_border }};
+    --color-announcement-bg: {{ settings.color_announcement_bg }};
+    --color-announcement-text: {{ settings.color_announcement_text }};
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-primary--family: var(--font-body);
+    --font-primary--style: normal;
+    --font-primary--weight: 400;
+    --page-width: {{ settings.container_max_width }}px;
+    --page-margin: {{ settings.page_padding }}px;
+    --container-max: {{ settings.container_max_width }}px;
+    --container-padding: clamp(12px, 3vw, {{ settings.page_padding }}px);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-pill: 100px;
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --header-height: 64px;
+    --category-strip-height: 44px;
+    --color-background: {{ settings.color_page_bg }};
+    --color-foreground: {{ settings.color_text_primary }};
+    --style-border-radius-inputs: 8px;
   }
 {% endstyle %}

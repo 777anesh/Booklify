@@ -1,0 +1,142 @@
+<section
+  class="section email-capture"
+  style="background: {{ section.settings.background_color }};"
+  {{ section.shopify_attributes }}
+>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.section_subheading != blank -%}
+        <p class="section__subheading">{{ section.settings.section_subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="email-capture__form">
+      {% form 'customer', class: 'email-capture__inner' %}
+        <input type="hidden" name="contact[tags]" value="newsletter, booklify">
+
+        <label class="visually-hidden" for="EmailCapture-{{ section.id }}">{{ section.settings.input_placeholder }}</label>
+        <input
+          id="EmailCapture-{{ section.id }}"
+          type="email"
+          name="contact[email]"
+          value="{{ form.email }}"
+          placeholder="{{ section.settings.input_placeholder }}"
+          autocomplete="email"
+          required
+        >
+
+        <input class="visually-hidden" tabindex="-1" autocomplete="off" name="contact[body]" value="">
+
+        <button type="submit" class="btn btn--primary">{{ section.settings.cta_text }}</button>
+
+        {%- if form.posted_successfully? -%}
+          <p class="email-capture__success text-secondary" role="status">{{ 'sections.email_capture.success' | t }}</p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <p class="text-danger" role="alert">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+      {% endform %}
+
+      {%- if section.settings.privacy_text != blank -%}
+        <p class="email-capture__privacy text-muted">{{ section.settings.privacy_text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.klaviyo_list_id != blank -%}
+        <p class="text-muted" data-klaviyo-list-id="{{ section.settings.klaviyo_list_id | escape }}">
+          {{ 'sections.email_capture.klaviyo_note' | t }}
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .email-capture__inner {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 750px) {
+    .email-capture__inner {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+  }
+
+  .email-capture__inner input[type='email'] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-page-bg);
+  }
+
+  .email-capture__privacy {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  .email-capture__success {
+    margin-top: 10px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.email_capture.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.email_capture.settings.heading.label",
+      "default": "Never miss a deal."
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "t:sections.email_capture.settings.subheading.label",
+      "default": "Get launch drops, bundle codes, and weekly picks."
+    },
+    {
+      "type": "text",
+      "id": "input_placeholder",
+      "label": "t:sections.email_capture.settings.placeholder.label",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "t:sections.email_capture.settings.cta.label",
+      "default": "Get my deals"
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_text",
+      "label": "t:sections.email_capture.settings.privacy.label",
+      "default": "We respect your inbox. Unsubscribe anytime."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "t:sections.email_capture.settings.klaviyo.label",
+      "info": "t:sections.email_capture.settings.klaviyo.info"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:sections.email_capture.settings.background.label",
+      "default": "#F1EFE8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.email_capture.presets.name"
+    }
+  ]
+}
+{% endschema %}

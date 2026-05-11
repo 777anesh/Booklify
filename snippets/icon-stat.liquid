@@ -1,0 +1,29 @@
+{% doc %}
+  Renders a simple inline icon for stats strip.
+
+  @param {string} name - Icon key: users, star, truck, refresh
+
+  @example
+  {% render 'icon-stat', name: 'star' %}
+{% enddoc %}
+
+{%- case name -%}
+  {%- when 'users' -%}
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M16 11a4 4 0 1 0-8 0 4 4 0 0 0 8 0ZM3 20a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  {%- when 'star' -%}
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9 6.8 19l1-5.8L3.6 9.1l5.8-.8L12 3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    </svg>
+  {%- when 'truck' -%}
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M3 7h11v8H3V7Zm11 5h3l3 3v2h-6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M7 20a2 2 0 1 0 0 .1M17 20a2 2 0 1 0 0 .1" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+  {%- else -%}
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path d="M5 12a7 7 0 0 1 7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M5 5v6h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+{%- endcase -%}

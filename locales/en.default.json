@@ -17,7 +17,23 @@
     "checkout": "Checkout",
     "title": "Cart",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "drawer_title": "Your cart",
+    "drawer_empty": "Your cart is empty.",
+    "subtotal": "Subtotal",
+    "view_cart": "View cart",
+    "drawer_upsell": "Add one more item to unlock bigger bundle savings at checkout.",
+    "drawer_trust": "Secure checkout · 30-day returns",
+    "free_shipping_remaining_html": "[[amount]] away from free shipping",
+    "free_shipping_met": "You unlocked free shipping",
+    "page_note": "Tip: you can also open the cart drawer from the header while you shop.",
+    "quantity": "Quantity",
+    "empty": "Your cart is empty."
+  },
+  "collections": {
+    "title": "Collections",
+    "count": "{{ count }} products",
+    "sort_label": "Sort"
   },
   "customers": {
     "login": {
@@ -27,8 +43,25 @@
       "title": "Login"
     }
   },
-  "collections": {
-    "title": "Collections"
+  "footer": {
+    "payments": "Accepted payment methods"
+  },
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close",
+      "open_menu": "Open menu",
+      "main_navigation": "Main navigation",
+      "menu": "Menu"
+    },
+    "breadcrumb": {
+      "label": "Breadcrumb",
+      "home": "Home",
+      "search": "Search"
+    },
+    "search": {
+      "search": "Search"
+    }
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
@@ -37,10 +70,37 @@
     "expires_on": "Expires on {{ expires_on }}",
     "use_at_checkout": "Use this gift card at checkout"
   },
+  "icons": {
+    "package": "Package",
+    "truck": "Shipping",
+    "lock": "Secure",
+    "shield": "Shield",
+    "star": "Star",
+    "refresh": "Returns"
+  },
   "password": {
     "title": "This shop is private",
     "password": "Password",
     "enter": "Enter"
+  },
+  "products": {
+    "sold_out": "Sold out",
+    "selling_fast": "Selling fast",
+    "add_to_bag": "Add to bag",
+    "add_to_bag_money": "Add to bag — {{ price }}",
+    "badges": {
+      "limited_edition": "Limited edition"
+    },
+    "save_percent": "Save {{ percent }}%",
+    "reviews_word": "reviews",
+    "sold": "sold",
+    "only_left": "Only {{ count }} left at this price",
+    "stock_note": "{{ percent }}% claimed — restocking not guaranteed",
+    "variant": "Variant",
+    "qty_decrease": "Decrease quantity",
+    "qty_increase": "Increase quantity",
+    "media_thumbs": "Product images",
+    "media_go_to": "Show image {{ index }}"
   },
   "search": {
     "title": "Search",
@@ -48,5 +108,24 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "sections": {
+    "onboarding": {
+      "collection": "Select a collection in the theme editor to show products.",
+      "collection_cards": "Add collection cards to this section.",
+      "product": "Select a product in the theme editor to feature it here."
+    },
+    "bundle_deals": {
+      "most_popular": "Most popular"
+    },
+    "reviews": {
+      "verified_buyer": "Verified buyer",
+      "load_more": "Load more reviews",
+      "rating_breakdown": "Rating breakdown"
+    },
+    "email_capture": {
+      "success": "Thanks — you are in.",
+      "klaviyo_note": "Klaviyo list ID saved for your integration script."
+    }
   }
 }

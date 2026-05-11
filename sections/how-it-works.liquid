@@ -1,0 +1,115 @@
+<section class="section how-it-works" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="how-it-works__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'step' -%}
+            <div class="how-step" {{ block.shopify_attributes }}>
+              <div class="how-step__number text-muted">{{ block.settings.step_number }}</div>
+              <div class="how-step__icon" aria-hidden="true">
+                {% render 'icon-trust', name: block.settings.step_icon %}
+              </div>
+              <h3 class="how-step__title">{{ block.settings.step_title }}</h3>
+              <p class="how-step__body text-secondary">{{ block.settings.step_body }}</p>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .how-it-works__grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 990px) {
+    .how-it-works__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .how-step {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    background: var(--color-page-bg);
+  }
+
+  .how-step__number {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .how-step__icon {
+    color: var(--color-accent-dark);
+    margin-bottom: 10px;
+  }
+
+  .how-step__title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .how-step__body {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.how_it_works.name",
+  "blocks": [
+    {
+      "type": "step",
+      "name": "t:sections.how_it_works.blocks.step.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "t:sections.how_it_works.blocks.step.settings.number.label",
+          "default": "01"
+        },
+        {
+          "type": "select",
+          "id": "step_icon",
+          "label": "t:sections.how_it_works.blocks.step.settings.icon.label",
+          "default": "package",
+          "options": [
+            { "value": "package", "label": "t:icons.package" },
+            { "value": "truck", "label": "t:icons.truck" },
+            { "value": "lock", "label": "t:icons.lock" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "t:sections.how_it_works.blocks.step.settings.title.label",
+          "default": "Pick your books"
+        },
+        {
+          "type": "textarea",
+          "id": "step_body",
+          "label": "t:sections.how_it_works.blocks.step.settings.body.label",
+          "default": "Browse collections and add titles to your cart."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.how_it_works.presets.name",
+      "blocks": [
+        { "type": "step" },
+        { "type": "step" },
+        { "type": "step" }
+      ]
+    }
+  ]
+}
+{% endschema %}

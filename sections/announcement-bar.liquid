@@ -1,0 +1,188 @@
+{%- if section.settings.enable_announcement_bar -%}
+  {%- liquid
+    assign end_iso = section.settings.announcement_sale_end_date | default: settings.sale_end_datetime
+    assign style_variant = section.settings.style_variant
+  -%}
+  <div
+    class="announcement-bar announcement-bar--{{ style_variant }}"
+    data-announcement-bar
+    data-end="{{ end_iso | escape }}"
+    data-enable-timer="{{ section.settings.announcement_enable_countdown }}"
+    data-rotate-ms="4000"
+    data-message-1="{{ section.settings.announcement_message_1 | escape }}"
+    data-message-2="{{ section.settings.announcement_message_2 | escape }}"
+    data-message-3="{{ section.settings.announcement_message_3 | escape }}"
+    style="
+      {% if style_variant == 'light' %}
+        --announcement-bg: {{ section.settings.announcement_bg_color }};
+        --announcement-fg: {{ section.settings.announcement_text_color }};
+      {% else %}
+        --announcement-bg: {{ section.settings.dark_bg_color }};
+        --announcement-fg: {{ section.settings.dark_text_color }};
+      {% endif %}
+    "
+    {{ section.shopify_attributes }}
+  >
+    <div class="announcement-bar__inner container">
+      <span class="announcement-bar__messages">
+        <span class="announcement-bar__text" data-announcement-text></span>
+      </span>
+      {%- if section.settings.announcement_enable_countdown -%}
+        <span class="announcement-bar__timer pill-timer" data-announcement-timer hidden>00:00:00</span>
+      {%- endif -%}
+      {%- if section.settings.announcement_cta_text != blank and section.settings.announcement_cta_url != blank -%}
+        <a class="announcement-bar__cta" href="{{ section.settings.announcement_cta_url }}">
+          {{ section.settings.announcement_cta_text }} →
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <script src="{{ 'section-announcement-bar.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .announcement-bar {
+    position: sticky;
+    top: 0;
+    z-index: 120;
+    background: var(--announcement-bg);
+    color: var(--announcement-fg);
+    font-size: 13px;
+    border-bottom: 1px solid color-mix(in srgb, var(--announcement-fg) 12%, transparent);
+  }
+
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .announcement-bar__text {
+    transition: opacity 180ms ease;
+  }
+
+  .announcement-bar__text.is-fading {
+    opacity: 0.35;
+  }
+
+  .announcement-bar__cta {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .announcement-bar__cta:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 749px) {
+    .announcement-bar__inner {
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    .announcement-bar__messages {
+      flex: 1 1 220px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.announcement_bar.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_announcement_bar",
+      "label": "t:sections.announcement_bar.settings.enable.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "style_variant",
+      "label": "t:sections.announcement_bar.settings.style.label",
+      "default": "light",
+      "options": [
+        { "value": "light", "label": "t:sections.announcement_bar.settings.style.options.light" },
+        { "value": "dark", "label": "t:sections.announcement_bar.settings.style.options.dark" }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "announcement_bg_color",
+      "label": "t:sections.announcement_bar.settings.bg_light.label",
+      "default": "#FAEEDA"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text_color",
+      "label": "t:sections.announcement_bar.settings.text_light.label",
+      "default": "#633806"
+    },
+    {
+      "type": "color",
+      "id": "dark_bg_color",
+      "label": "t:sections.announcement_bar.settings.bg_dark.label",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "dark_text_color",
+      "label": "t:sections.announcement_bar.settings.text_dark.label",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "checkbox",
+      "id": "announcement_enable_countdown",
+      "label": "t:sections.announcement_bar.settings.countdown.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "announcement_sale_end_date",
+      "label": "t:sections.announcement_bar.settings.end_date.label",
+      "info": "t:sections.announcement_bar.settings.end_date.info"
+    },
+    {
+      "type": "text",
+      "id": "announcement_message_1",
+      "label": "t:sections.announcement_bar.settings.message_1.label",
+      "default": "Flash sale — 40% off ends soon · Free shipping on $35+"
+    },
+    {
+      "type": "text",
+      "id": "announcement_message_2",
+      "label": "t:sections.announcement_bar.settings.message_2.label",
+      "default": "Orders placed before 2PM ship today · Free shipping on $35+"
+    },
+    {
+      "type": "text",
+      "id": "announcement_message_3",
+      "label": "t:sections.announcement_bar.settings.message_3.label",
+      "default": "Over 8,200 readers served — join them"
+    },
+    {
+      "type": "text",
+      "id": "announcement_cta_text",
+      "label": "t:sections.announcement_bar.settings.cta_text.label",
+      "default": "Shop now"
+    },
+    {
+      "type": "url",
+      "id": "announcement_cta_url",
+      "label": "t:sections.announcement_bar.settings.cta_url.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.announcement_bar.presets.name"
+    }
+  ]
+}
+{% endschema %}

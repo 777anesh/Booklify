@@ -1,0 +1,156 @@
+<section class="section faq" {{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_label != blank -%}
+        <p class="section__label">{{ section.settings.section_label }}</p>
+      {%- endif -%}
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+    </header>
+
+    <div class="faq__list" data-faq data-mode="{{ section.settings.accordion_mode }}">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'item' -%}
+            <details class="faq__item" {{ block.shopify_attributes }}>
+              <summary class="faq__summary">
+                <span>{{ block.settings.question }}</span>
+                <span class="faq__chev" aria-hidden="true">+</span>
+              </summary>
+              <div class="faq__answer rte">{{ block.settings.answer }}</div>
+            </details>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {%- assign first_entity = true -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'item' -%}
+              {%- unless first_entity -%},{%- endunless -%}
+              {%- assign first_entity = false -%}
+              {
+                "@type": "Question",
+                "name": {{ block.settings.question | json }},
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": {{ block.settings.answer | strip_html | json }}
+                }
+              }
+            {%- endif -%}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  {%- endif -%}
+</section>
+
+<script src="{{ 'section-faq.js' | asset_url }}" defer></script>
+
+{% stylesheet %}
+  .faq__item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    background: var(--color-page-bg);
+    margin-bottom: 10px;
+  }
+
+  .faq__summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-weight: 650;
+  }
+
+  .faq__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__chev {
+    font-weight: 800;
+    color: var(--color-text-muted);
+    transition: transform var(--transition-fast);
+  }
+
+  .faq__item[open] .faq__chev {
+    transform: rotate(45deg);
+  }
+
+  .faq__answer {
+    padding-top: 10px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.faq.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.faq.settings.label.label",
+      "default": "Questions?"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.faq.settings.heading.label",
+      "default": "Good question. Here's the answer."
+    },
+    {
+      "type": "select",
+      "id": "accordion_mode",
+      "label": "t:sections.faq.settings.mode.label",
+      "default": "one",
+      "options": [
+        { "value": "one", "label": "t:sections.faq.settings.mode.options.one" },
+        { "value": "many", "label": "t:sections.faq.settings.mode.options.many" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.faq.blocks.item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq.blocks.item.settings.question.label",
+          "default": "How fast will my order arrive?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.faq.blocks.item.settings.answer.label",
+          "default": "<p>Most orders ship within 24 hours on business days.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.faq.presets.name",
+      "blocks": [
+        { "type": "item" },
+        { "type": "item" },
+        { "type": "item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

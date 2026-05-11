@@ -1,0 +1,272 @@
+{%- liquid
+  assign p = section.settings.product
+-%}
+
+{%- if p != blank -%}
+  {%- liquid
+    assign current_variant = p.selected_or_first_available_variant
+    assign mf_author = settings.metafield_author_key | split: '.'
+    assign author = p.metafields[mf_author[0]][mf_author[1]]
+    assign inv = current_variant.inventory_quantity
+  -%}
+  {%- capture featured_price -%}
+    {{- p.price | money -}}
+  {%- endcapture -%}
+
+  <section class="section featured-product" data-featured-product {{ section.shopify_attributes }}>
+    <div class="container">
+      <header class="section__header">
+        {%- if section.settings.section_label != blank -%}
+          <p class="section__label">{{ section.settings.section_label }}</p>
+        {%- endif -%}
+      </header>
+
+      <div class="featured-product__grid">
+        <div class="featured-product__media">
+          <div class="featured-product__stage">
+            {%- if p.featured_media -%}
+              <div data-featured-main-image>
+                {{ p.featured_media | image_url: width: 1400 | image_tag: loading: 'lazy', alt: p.featured_media.alt | default: p.title }}
+              </div>
+            {%- endif -%}
+
+            {%- if p.media.size > 1 -%}
+              <div class="featured-product__thumbs">
+                {%- for media in p.media limit: 6 -%}
+                  <button
+                    type="button"
+                    class="featured-product__thumb{% if forloop.first %} is-active{% endif %}"
+                    data-featured-src="{{ media | image_url: width: 1400 }}"
+                  >
+                    {{ media | image_url: width: 200 | image_tag: loading: 'lazy', alt: media.alt | default: p.title }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="featured-product__info">
+          <h2 class="featured-product__title">{{ p.title }}</h2>
+          {%- if author != blank -%}
+            <p class="text-secondary">{{ author.value | default: author }}</p>
+          {%- endif -%}
+
+          <div class="featured-product__price">
+            {%- if p.compare_at_price > p.price -%}
+              <s class="text-muted">{{ p.compare_at_price | money }}</s>
+            {%- endif -%}
+            <strong>{{ p.price | money }}</strong>
+          </div>
+
+          {%- if section.settings.enable_stock_counter and current_variant.inventory_management and inv > 0 and inv < 20 -%}
+            <p class="text-danger">{{ 'products.only_left' | t: count: inv }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.enable_urgency_badge -%}
+            {%- assign badge = section.settings.custom_badge_text -%}
+            {%- if badge == blank -%}
+              {%- assign badge = 'products.selling_fast' | t -%}
+            {%- endif -%}
+            <span class="badge badge--accent">{{ badge }}</span>
+          {%- endif -%}
+
+          <p class="featured-product__trust text-secondary">{{ section.settings.trust_line }}</p>
+
+          {% form 'product', p %}
+            <input type="hidden" name="id" value="{{ current_variant.id }}">
+            <div class="featured-product__qty-row">
+              <div class="qty" data-featured-qty>
+                <button type="button" data-fq-dec aria-label="{{ 'products.qty_decrease' | t }}">−</button>
+                <input type="number" name="quantity" min="1" value="1" data-fq-input>
+                <button type="button" data-fq-inc aria-label="{{ 'products.qty_increase' | t }}">+</button>
+              </div>
+              <button type="button" class="btn btn--primary btn--block js-featured-atc" data-add-to-cart data-variant-id="{{ current_variant.id }}" data-quantity="1">
+                {{ 'products.add_to_bag_money' | t: price: featured_price }}
+              </button>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+
+    <div class="sticky-atc sticky-atc--featured" data-featured-sticky aria-hidden="true">
+      <div class="sticky-atc__inner container">
+        <div class="sticky-atc__product">
+          {%- if p.featured_image -%}
+            {{ p.featured_image | image_url: width: 144 | image_tag: loading: 'lazy', alt: p.title, class: 'sticky-atc__thumb' }}
+          {%- endif -%}
+          <div>
+            <div class="sticky-atc__title">{{ p.title }}</div>
+            <div class="sticky-atc__price"><strong>{{ p.price | money }}</strong></div>
+          </div>
+        </div>
+        <div class="sticky-atc__trust text-secondary">{{ 'cart.drawer_trust' | t }}</div>
+        <button type="button" class="btn btn--primary sticky-atc__btn" data-featured-sticky-add data-variant-id="{{ current_variant.id }}">
+          {{ 'products.add_to_bag_money' | t: price: featured_price }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script src="{{ 'section-featured-product.js' | asset_url }}" defer></script>
+{%- else -%}
+  <section class="section" {{ section.shopify_attributes }}>
+    <div class="container">
+      <p class="text-secondary">{{ 'sections.onboarding.product' | t }}</p>
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .featured-product__grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 990px) {
+    .featured-product__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .featured-product__stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+
+  .featured-product__stage img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  .featured-product__thumbs {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-page-bg);
+  }
+
+  .featured-product__thumb {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .featured-product__thumb.is-active {
+    outline: 2px solid var(--color-cta-bg);
+    outline-offset: 1px;
+  }
+
+  .featured-product__thumb img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  .featured-product__title {
+    font-size: clamp(22px, 3vw, 32px);
+    margin-bottom: 8px;
+  }
+
+  .featured-product__price {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    font-size: 22px;
+    margin: 12px 0;
+  }
+
+  .featured-product__trust {
+    margin: 12px 0;
+    font-size: 13px;
+  }
+
+  .featured-product__qty-row {
+    display: grid;
+    gap: 10px;
+  }
+
+  @media (min-width: 750px) {
+    .featured-product__qty-row {
+      grid-template-columns: 160px 1fr;
+      align-items: center;
+    }
+  }
+
+  .sticky-atc--featured {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 85;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--color-border);
+    transform: translateY(110%);
+    transition: transform var(--transition-base);
+  }
+
+  .sticky-atc--featured.is-visible {
+    transform: translateY(0);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.featured_product.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.featured_product.settings.label.label",
+      "default": "This week's #1 bestseller"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:sections.featured_product.settings.product.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_stock_counter",
+      "label": "t:sections.featured_product.settings.stock.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_urgency_badge",
+      "label": "t:sections.featured_product.settings.urgency.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "custom_badge_text",
+      "label": "t:sections.featured_product.settings.badge_text.label"
+    },
+    {
+      "type": "textarea",
+      "id": "trust_line",
+      "label": "t:sections.featured_product.settings.trust.label",
+      "default": "Free shipping over $35 · 30-day returns · Secure checkout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured_product.presets.name"
+    }
+  ]
+}
+{% endschema %}

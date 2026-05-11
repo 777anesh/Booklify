@@ -1,0 +1,176 @@
+{% doc %}
+  Renders breadcrumbs and BreadcrumbList JSON-LD for common templates.
+
+  @param {object} [collection_obj] - Active collection when on product (optional)
+
+  @example
+  {% render 'breadcrumb', collection_obj: collection %}
+{% enddoc %}
+
+{%- unless template.name == 'index' -%}
+  <nav class="breadcrumb container" aria-label="{{ 'general.breadcrumb.label' | t }}">
+    <ol class="breadcrumb__list">
+      <li class="breadcrumb__item">
+        <a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a>
+      </li>
+
+      {%- if template.name == 'search' -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+          {{ 'general.breadcrumb.search' | t }}{% if search.terms != blank %}: {{ search.terms | escape }}{% endif %}
+        </li>
+      {%- elsif template.name == 'blog' -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+          {{ blog.title }}
+        </li>
+      {%- elsif template.name == 'article' -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item">
+          <a href="{{ blog.url }}">{{ blog.title }}</a>
+        </li>
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+          {{ article.title }}
+        </li>
+      {%- elsif collection_obj -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item">
+          <a href="{{ collection_obj.url }}">{{ collection_obj.title }}</a>
+        </li>
+      {%- endif -%}
+
+      {%- if product -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+          {{ product.title }}
+        </li>
+      {%- elsif page -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+          {{ page.title }}
+        </li>
+      {%- elsif collection and template.name == 'collection' -%}
+        <li class="breadcrumb__sep" aria-hidden="true">/</li>
+        <li class="breadcrumb__item breadcrumb__item--current" aria-current="page">
+          {{ collection.title }}
+        </li>
+      {%- endif -%}
+    </ol>
+  </nav>
+
+  {%- liquid
+    assign origin = request.origin | default: shop.url
+    assign home_item = origin | append: routes.root_url
+    assign pos = 2
+  -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ 'general.breadcrumb.home' | t | json }},
+          "item": {{ home_item | json }}
+        }
+        {%- if template.name == 'search' -%}
+          {%- assign q = search.terms | url_param_escape -%}
+          {%- assign search_item = origin | append: routes.search_url | append: '?q=' | append: q -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos }},
+            "name": {{ 'general.breadcrumb.search' | t | json }},
+            "item": {{ search_item | json }}
+          }
+        {%- elsif template.name == 'blog' -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos }},
+            "name": {{ blog.title | json }},
+            "item": {{ origin | append: blog.url | json }}
+          }
+        {%- elsif template.name == 'article' -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos }},
+            "name": {{ blog.title | json }},
+            "item": {{ origin | append: blog.url | json }}
+          }
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos | plus: 1 }},
+            "name": {{ article.title | json }},
+            "item": {{ origin | append: article.url | json }}
+          }
+        {%- elsif collection_obj -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos }},
+            "name": {{ collection_obj.title | json }},
+            "item": {{ origin | append: collection_obj.url | json }}
+          }
+        {%- endif -%}
+        {%- if product -%}
+          ,{
+            "@type": "ListItem",
+            "position": {% if collection_obj %}{{ pos | plus: 1 }}{% else %}{{ pos }}{% endif %},
+            "name": {{ product.title | json }},
+            "item": {{ origin | append: product.url | json }}
+          }
+        {%- elsif page -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos }},
+            "name": {{ page.title | json }},
+            "item": {{ origin | append: page.url | json }}
+          }
+        {%- elsif collection and template.name == 'collection' -%}
+          ,{
+            "@type": "ListItem",
+            "position": {{ pos }},
+            "name": {{ collection.title | json }},
+            "item": {{ origin | append: collection.url | json }}
+          }
+        {%- endif -%}
+      ]
+    }
+  </script>
+{%- endunless -%}
+
+{% stylesheet %}
+  .breadcrumb {
+    padding-block: 14px;
+  }
+
+  .breadcrumb__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  .breadcrumb__item a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .breadcrumb__item a:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb__item--current {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .breadcrumb__sep {
+    color: var(--color-text-muted);
+  }
+{% endstylesheet %}

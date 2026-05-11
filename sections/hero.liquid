@@ -1,0 +1,270 @@
+<section class="section hero" {{ section.shopify_attributes }}>
+  <div class="container hero__grid hero__grid--{{ section.settings.hero_layout }}">
+    <div class="hero__content">
+      {%- if section.settings.hero_label != blank -%}
+        <p class="hero__eyebrow">{{ section.settings.hero_label }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.hero_headline != blank -%}
+        <h1 class="hero__title">{{ section.settings.hero_headline }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.hero_subheadline != blank -%}
+        <p class="hero__sub text-secondary">{{ section.settings.hero_subheadline }}</p>
+      {%- endif -%}
+
+      <div class="hero__actions">
+        {%- if section.settings.hero_cta_primary_text != blank and section.settings.hero_cta_primary_url != blank -%}
+          <a class="btn btn--primary" href="{{ section.settings.hero_cta_primary_url }}">{{ section.settings.hero_cta_primary_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.hero_cta_secondary_text != blank and section.settings.hero_cta_secondary_url != blank -%}
+          <a class="btn btn--ghost" href="{{ section.settings.hero_cta_secondary_url }}">{{ section.settings.hero_cta_secondary_text }}</a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.hero_enable_nudge and section.settings.hero_nudge_text != blank -%}
+        <p class="hero__nudge">
+          <span class="hero__pulse" aria-hidden="true"></span>
+          {{ section.settings.hero_nudge_text }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <div class="hero__media">
+      <div class="hero__media-frame">
+        {%- if section.settings.hero_image != blank -%}
+          {{ section.settings.hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_image_alt }}
+        {%- else -%}
+          <div class="hero__placeholder" aria-hidden="true"></div>
+        {%- endif -%}
+
+        {%- if section.settings.hero_badge_text != blank -%}
+          <span class="hero__badge badge badge--accent">{{ section.settings.hero_badge_text }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .hero__grid {
+    display: grid;
+    gap: clamp(20px, 4vw, 40px);
+    align-items: center;
+  }
+
+  .hero__grid--image_right {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 990px) {
+    .hero__grid--image_right {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+
+    .hero__grid--image_left {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .hero__grid--image_left .hero__content {
+      order: 2;
+    }
+
+    .hero__grid--image_left .hero__media {
+      order: 1;
+    }
+
+    .hero__grid--full_width_image {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .hero__eyebrow {
+    color: var(--color-accent-dark);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  .hero__title {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+
+  .hero__sub {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 52ch;
+    margin-bottom: 20px;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .hero__nudge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 0 rgba(239, 159, 39, 0.55);
+    animation: heroPulse 1.8s ease-out infinite;
+  }
+
+  @keyframes heroPulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(239, 159, 39, 0.55);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 10px rgba(239, 159, 39, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(239, 159, 39, 0);
+    }
+  }
+
+  .hero__media-frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .hero__media-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 700ms ease;
+  }
+
+  .hero__media-frame:hover img {
+    transform: scale(1.03);
+  }
+
+  .hero__placeholder {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--color-surface), #fff);
+  }
+
+  .hero__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+
+  .hero__grid--full_width_image .hero__media {
+    grid-column: 1 / -1;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.hero.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_label",
+      "label": "t:sections.hero.settings.label.label",
+      "default": "Flash sale — today only"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_headline",
+      "label": "t:sections.hero.settings.headline.label",
+      "default": "Books you won't be able to put down."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subheadline",
+      "label": "t:sections.hero.settings.subheadline.label",
+      "default": "Handpicked bestsellers, unbeatable bundles, delivered fast. New deals every week — don't miss yours."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_primary_text",
+      "label": "t:sections.hero.settings.cta_primary_text.label",
+      "default": "Shop the sale"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_primary_url",
+      "label": "t:sections.hero.settings.cta_primary_url.label"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_secondary_text",
+      "label": "t:sections.hero.settings.cta_secondary_text.label",
+      "default": "Browse all books"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_secondary_url",
+      "label": "t:sections.hero.settings.cta_secondary_url.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_enable_nudge",
+      "label": "t:sections.hero.settings.nudge_enable.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "hero_nudge_text",
+      "label": "t:sections.hero.settings.nudge_text.label",
+      "default": "143 people are shopping right now"
+    },
+    {
+      "type": "text",
+      "id": "hero_badge_text",
+      "label": "t:sections.hero.settings.badge.label",
+      "default": "40% off — today only"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "t:sections.hero.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_alt",
+      "label": "t:sections.hero.settings.image_alt.label"
+    },
+    {
+      "type": "select",
+      "id": "hero_layout",
+      "label": "t:sections.hero.settings.layout.label",
+      "default": "image_right",
+      "options": [
+        { "value": "image_right", "label": "t:sections.hero.settings.layout.options.image_right" },
+        { "value": "image_left", "label": "t:sections.hero.settings.layout.options.image_left" },
+        { "value": "full_width_image", "label": "t:sections.hero.settings.layout.options.full" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.hero.presets.name"
+    }
+  ]
+}
+{% endschema %}
