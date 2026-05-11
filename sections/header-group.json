@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header group",
@@ -7,24 +16,41 @@
       "settings": {
         "enable_announcement_bar": true,
         "style_variant": "light",
-        "announcement_enable_countdown": true
+        "announcement_bg_color": "#edd7d7",
+        "announcement_text_color": "#633806",
+        "dark_bg_color": "#1a1a1a",
+        "dark_text_color": "#f5f5f5",
+        "announcement_enable_countdown": true,
+        "announcement_sale_end_date": "",
+        "announcement_message_1": "Flash sale — 40% off ends soon · Free shipping on $35+",
+        "announcement_message_2": "Orders placed before 2PM ship today · Free shipping on $35+",
+        "announcement_message_3": "Over 8,200 readers served — join them",
+        "announcement_cta_text": "Shop now",
+        "announcement_cta_url": ""
       }
     },
     "header": {
       "type": "header",
       "settings": {
         "logo_text": "Booklify",
-        "enable_sticky_header": true
+        "logo_max_width": 140,
+        "enable_sticky_header": true,
+        "menu": ""
       }
     },
     "category_strip": {
       "type": "category-strip",
       "settings": {
         "strip_label": "Browse categories",
+        "category_menu": "",
         "enable_sticky": true,
         "show_item_count": false
       }
     }
   },
-  "order": ["announcement", "header", "category_strip"]
+  "order": [
+    "announcement",
+    "header",
+    "category_strip"
+  ]
 }

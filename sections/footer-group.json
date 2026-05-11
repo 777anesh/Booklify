@@ -14,8 +14,15 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
-        "show_payment_icons": true
+        "footer_tagline": "Booklify — more books. Less spending. Always.",
+        "footer_trust_line": "Secure payments · Free returns · US-based warehouse",
+        "show_payment_icons": true,
+        "menu_1": "main-menu",
+        "menu_2": "main-menu",
+        "menu_3": "",
+        "social_instagram": "",
+        "social_tiktok": "",
+        "social_facebook": ""
       }
     }
   },

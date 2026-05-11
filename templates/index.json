@@ -1,69 +1,366 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
+        "hero_label": "Flash sale — today only",
+        "hero_headline": "Books you won't be able to put down.",
+        "hero_subheadline": "Handpicked bestsellers, unbeatable bundles, delivered fast. New deals every week — don't miss yours.",
+        "hero_cta_primary_text": "Shop the sale",
+        "hero_cta_primary_url": "",
+        "hero_cta_secondary_text": "Browse all books",
+        "hero_cta_secondary_url": "",
+        "hero_enable_nudge": true,
+        "hero_nudge_text": "143 people are shopping right now",
+        "hero_badge_text": "40% off — today only",
+        "hero_image_alt": "",
         "hero_layout": "image_right"
       }
     },
     "stats": {
       "type": "stats-strip",
-      "settings": {}
+      "settings": {
+        "stat_1_number": "8,200+",
+        "stat_1_label": "Happy readers",
+        "stat_1_icon": "users",
+        "stat_2_number": "4.9 / 5",
+        "stat_2_label": "From 1,800+ reviews",
+        "stat_2_icon": "star",
+        "stat_3_number": "Same day",
+        "stat_3_label": "Ships before 2PM",
+        "stat_3_icon": "truck",
+        "stat_4_number": "30-day",
+        "stat_4_label": "Free returns",
+        "stat_4_icon": "refresh"
+      }
     },
     "collection_showcase": {
       "type": "collection-showcase",
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "collection_DBwfG6": {
+          "type": "collection",
+          "settings": {
+            "collection": "comics",
+            "title": "",
+            "count_label": "[[count]] titles"
+          }
+        },
+        "collection_haY3BT": {
+          "type": "collection",
+          "settings": {
+            "collection": "coffee-tables",
+            "title": "",
+            "count_label": "[[count]] titles"
+          }
+        },
+        "collection_kp8LRK": {
+          "type": "collection",
+          "settings": {
+            "collection": "box-sets",
+            "title": "",
+            "count_label": "[[count]] titles"
+          }
+        }
+      },
+      "block_order": [
+        "collection_DBwfG6",
+        "collection_haY3BT",
+        "collection_kp8LRK"
+      ],
+      "settings": {
+        "section_label": "Browse by type",
+        "section_heading": "Explore the collections",
+        "section_subheading": "Pick a category and start building your next read stack."
+      }
     },
     "bundle_deals": {
       "type": "bundle-deals",
-      "settings": {
-        "discount_code_prefix": ""
+      "blocks": {
+        "tier_ffLQY7": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 2,
+            "tier_title": "Buy any 2",
+            "tier_save_label": "Save 25%",
+            "tier_from_price": "From $26.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": ""
+          }
+        },
+        "tier_JxETyU": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 2,
+            "tier_title": "Buy any 2",
+            "tier_save_label": "Save 25%",
+            "tier_from_price": "From $26.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": ""
+          }
+        },
+        "tier_UnVnNb": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 2,
+            "tier_title": "Buy any 2",
+            "tier_save_label": "Save 25%",
+            "tier_from_price": "From $26.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": ""
+          }
+        },
+        "tier_qCKVGG": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 2,
+            "tier_title": "Buy any 2",
+            "tier_save_label": "Save 25%",
+            "tier_from_price": "From $26.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": ""
+          }
+        }
       },
-      "blocks": {},
-      "block_order": []
+      "block_order": [
+        "tier_ffLQY7",
+        "tier_JxETyU",
+        "tier_UnVnNb",
+        "tier_qCKVGG"
+      ],
+      "settings": {
+        "section_label": "Save more",
+        "section_heading": "The more you read, the more you save.",
+        "section_subheading": "Build your bundle — mix genres, mix titles.",
+        "discount_code_prefix": ""
+      }
     },
     "how_it_works": {
       "type": "how-it-works",
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "step_kFfD3e": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_icon": "package",
+            "step_title": "Pick your books",
+            "step_body": "Browse collections and add titles to your cart."
+          }
+        },
+        "step_G7ikeR": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_icon": "package",
+            "step_title": "Pick your books",
+            "step_body": "Browse collections and add titles to your cart."
+          }
+        },
+        "step_DDHXDB": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_icon": "package",
+            "step_title": "Pick your books",
+            "step_body": "Browse collections and add titles to your cart."
+          }
+        }
+      },
+      "block_order": [
+        "step_kFfD3e",
+        "step_G7ikeR",
+        "step_DDHXDB"
+      ],
+      "settings": {}
     },
     "bestsellers": {
       "type": "bestseller-grid",
       "settings": {
+        "section_heading": "Right now's hottest reads",
+        "collection": "coffee-tables",
+        "products_to_show": 8,
         "columns_desktop": "4",
-        "products_to_show": 8
+        "enable_quick_add": true,
+        "enable_selling_fast_badge": true,
+        "selling_fast_threshold": 20
       }
     },
     "trust": {
       "type": "trust-badges",
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "item_fBBfPy": {
+          "type": "item",
+          "settings": {
+            "badge_icon": "refresh",
+            "badge_title": "30-day returns",
+            "badge_subtitle": "No stress if it is not a perfect match."
+          }
+        },
+        "item_nWV6AF": {
+          "type": "item",
+          "settings": {
+            "badge_icon": "refresh",
+            "badge_title": "30-day returns",
+            "badge_subtitle": "No stress if it is not a perfect match."
+          }
+        },
+        "item_bJY6Qz": {
+          "type": "item",
+          "settings": {
+            "badge_icon": "refresh",
+            "badge_title": "30-day returns",
+            "badge_subtitle": "No stress if it is not a perfect match."
+          }
+        },
+        "item_tfdwzU": {
+          "type": "item",
+          "settings": {
+            "badge_icon": "refresh",
+            "badge_title": "30-day returns",
+            "badge_subtitle": "No stress if it is not a perfect match."
+          }
+        }
+      },
+      "block_order": [
+        "item_fBBfPy",
+        "item_nWV6AF",
+        "item_bJY6Qz",
+        "item_tfdwzU"
+      ],
+      "settings": {}
     },
     "reviews": {
       "type": "reviews",
-      "settings": {
-        "layout_mode": "default"
+      "blocks": {
+        "review_J3Hi8K": {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Sarah M.",
+            "reviewer_location": "Austin, TX",
+            "review_text": "Shipping was fast and the packaging was perfect.",
+            "review_rating": 5,
+            "review_product": "The Midnight Library"
+          }
+        },
+        "review_j6G4Mx": {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Sarah M.",
+            "reviewer_location": "Austin, TX",
+            "review_text": "Shipping was fast and the packaging was perfect.",
+            "review_rating": 5,
+            "review_product": "The Midnight Library"
+          }
+        },
+        "review_X7dapj": {
+          "type": "review",
+          "settings": {
+            "reviewer_name": "Sarah M.",
+            "reviewer_location": "Austin, TX",
+            "review_text": "Shipping was fast and the packaging was perfect.",
+            "review_rating": 5,
+            "review_product": "The Midnight Library"
+          }
+        }
       },
-      "blocks": {},
-      "block_order": []
+      "block_order": [
+        "review_J3Hi8K",
+        "review_j6G4Mx",
+        "review_X7dapj"
+      ],
+      "settings": {
+        "layout_mode": "default",
+        "section_label": "Reader love",
+        "section_heading": "Real readers. Real results.",
+        "section_subheading": "1,400+ verified reviews — and counting.",
+        "aggregate_rating": "4.9 / 5",
+        "aggregate_count": "1,412 reviews",
+        "bar_5_percent": 78,
+        "bar_4_percent": 14,
+        "bar_3_percent": 5,
+        "bar_2_percent": 2,
+        "bar_1_percent": 1,
+        "show_load_more": false
+      }
     },
     "faq": {
       "type": "faq",
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "item_FWFBqi": {
+          "type": "item",
+          "settings": {
+            "question": "How fast will my order arrive?",
+            "answer": "<p>Most orders ship within 24 hours on business days.</p>"
+          }
+        },
+        "item_FjPgi4": {
+          "type": "item",
+          "settings": {
+            "question": "How fast will my order arrive?",
+            "answer": "<p>Most orders ship within 24 hours on business days.</p>"
+          }
+        },
+        "item_rrczFe": {
+          "type": "item",
+          "settings": {
+            "question": "How fast will my order arrive?",
+            "answer": "<p>Most orders ship within 24 hours on business days.</p>"
+          }
+        },
+        "item_bYFXF8": {
+          "type": "item",
+          "settings": {
+            "question": "How fast will my order arrive?",
+            "answer": "<p>Most orders ship within 24 hours on business days.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "item_FWFBqi",
+        "item_FjPgi4",
+        "item_rrczFe",
+        "item_bYFXF8"
+      ],
+      "settings": {
+        "section_label": "Questions?",
+        "section_heading": "Good question. Here's the answer.",
+        "accordion_mode": "one"
+      }
     },
     "featured": {
       "type": "featured-product",
-      "settings": {}
+      "settings": {
+        "section_label": "This week's #1 bestseller",
+        "product": "dune-original-edition-frank-herbert",
+        "enable_stock_counter": true,
+        "enable_urgency_badge": false,
+        "custom_badge_text": "",
+        "trust_line": "Free shipping over $35 · 30-day returns · Secure checkout"
+      }
     },
     "email": {
       "type": "email-capture",
-      "settings": {}
+      "settings": {
+        "section_heading": "Never miss a deal.",
+        "section_subheading": "Get launch drops, bundle codes, and weekly picks.",
+        "input_placeholder": "Your email address",
+        "cta_text": "Get my deals",
+        "privacy_text": "We respect your inbox. Unsubscribe anytime.",
+        "klaviyo_list_id": "",
+        "background_color": "#f1efe8"
+      }
     }
   },
   "order": [
