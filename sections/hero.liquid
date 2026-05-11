@@ -1,69 +1,86 @@
-<section class="section hero" {{ section.shopify_attributes }}>
-  <div class="container hero__grid hero__grid--{{ section.settings.hero_layout }}">
-    <div class="hero__content">
-      {%- if section.settings.hero_label != blank -%}
-        <p class="hero__eyebrow">{{ section.settings.hero_label }}</p>
-      {%- endif -%}
-
-      {%- if section.settings.hero_headline != blank -%}
-        <h1 class="hero__title">{{ section.settings.hero_headline }}</h1>
-      {%- endif -%}
-
-      {%- if section.settings.hero_subheadline != blank -%}
-        <p class="hero__sub text-secondary">{{ section.settings.hero_subheadline }}</p>
-      {%- endif -%}
-
-      <div class="hero__actions">
-        {%- if section.settings.hero_cta_primary_text != blank and section.settings.hero_cta_primary_url != blank -%}
-          <a class="btn btn--primary" href="{{ section.settings.hero_cta_primary_url }}">{{ section.settings.hero_cta_primary_text }}</a>
+<section class="section hero surface-muted" {{ section.shopify_attributes }}>
+  <div class="container">
+    <div class="hero__grid hero__grid--{{ section.settings.hero_layout }}">
+      <div class="hero__content">
+        {%- if section.settings.hero_label != blank -%}
+          <p class="hero__eyebrow">{{ section.settings.hero_label }}</p>
         {%- endif -%}
-        {%- if section.settings.hero_cta_secondary_text != blank and section.settings.hero_cta_secondary_url != blank -%}
-          <a class="btn btn--ghost" href="{{ section.settings.hero_cta_secondary_url }}">{{ section.settings.hero_cta_secondary_text }}</a>
+
+        {%- if section.settings.hero_headline != blank -%}
+          <h1 class="hero__title">{{ section.settings.hero_headline }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.hero_subheadline != blank -%}
+          <p class="hero__sub text-secondary">{{ section.settings.hero_subheadline }}</p>
+        {%- endif -%}
+
+        <div class="hero__actions">
+          {%- if section.settings.hero_cta_primary_text != blank and section.settings.hero_cta_primary_url != blank -%}
+            <a class="btn btn--primary" href="{{ section.settings.hero_cta_primary_url }}">{{ section.settings.hero_cta_primary_text }}</a>
+          {%- endif -%}
+          {%- if section.settings.hero_cta_secondary_text != blank and section.settings.hero_cta_secondary_url != blank -%}
+            <a class="btn btn--ghost" href="{{ section.settings.hero_cta_secondary_url }}">{{ section.settings.hero_cta_secondary_text }}</a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.hero_enable_nudge and section.settings.hero_nudge_text != blank -%}
+          <p class="hero__nudge">
+            <span class="hero__pulse" aria-hidden="true"></span>
+            {{ section.settings.hero_nudge_text }}
+          </p>
         {%- endif -%}
       </div>
 
-      {%- if section.settings.hero_enable_nudge and section.settings.hero_nudge_text != blank -%}
-        <p class="hero__nudge">
-          <span class="hero__pulse" aria-hidden="true"></span>
-          {{ section.settings.hero_nudge_text }}
-        </p>
-      {%- endif -%}
-    </div>
-
-    <div class="hero__media">
-      <div class="hero__media-frame">
-        {%- if section.settings.hero_image != blank -%}
-          {{ section.settings.hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_image_alt }}
-        {%- else -%}
-          <div class="hero__placeholder" aria-hidden="true"></div>
-        {%- endif -%}
-
-        {%- if section.settings.hero_badge_text != blank -%}
-          <span class="hero__badge badge badge--accent">{{ section.settings.hero_badge_text }}</span>
-        {%- endif -%}
+      <div class="hero__media">
+        <div class="hero__media-frame">
+          {%- if section.settings.hero_image != blank -%}
+            {{ section.settings.hero_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', alt: section.settings.hero_image_alt }}
+            {%- if section.settings.hero_badge_text != blank -%}
+              <span class="hero__badge badge badge--accent">{{ section.settings.hero_badge_text }}</span>
+            {%- endif -%}
+          {%- else -%}
+            <div class="hero__image-placeholder">
+              {%- if section.settings.hero_badge_text != blank -%}
+                <div class="hero__float-badge">{{ section.settings.hero_badge_text }}</div>
+              {%- endif -%}
+              <div class="hero__books">
+                <div class="hero__book" style="height: 100px; background: #d3d1c7;"></div>
+                <div class="hero__book" style="height: 120px; background: #b4b2a9; margin-left: -4px;"></div>
+                <div class="hero__book" style="height: 90px; background: #888780; margin-left: -4px;"></div>
+              </div>
+              <p class="hero__book-label">{{ 'sections.hero.explore_bestsellers' | t }}</p>
+            </div>
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
+  .hero.section {
+    padding-block: 48px;
+    padding-inline: 0;
+  }
+
   .hero__grid {
     display: grid;
-    gap: clamp(20px, 4vw, 40px);
+    gap: 40px;
     align-items: center;
+    grid-template-columns: 1fr;
   }
 
   .hero__grid--image_right {
     grid-template-columns: 1fr;
   }
 
-  @media (min-width: 990px) {
+  @media (min-width: 769px) {
     .hero__grid--image_right {
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1fr 1fr;
     }
 
     .hero__grid--image_left {
-      grid-template-columns: 0.95fr 1.05fr;
+      grid-template-columns: 1fr 1fr;
     }
 
     .hero__grid--image_left .hero__content {
@@ -81,47 +98,48 @@
 
   .hero__eyebrow {
     color: var(--color-accent-dark);
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-weight: 500;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     font-size: 11px;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+    display: block;
   }
 
   .hero__title {
-    font-size: clamp(32px, 5vw, 52px);
-    line-height: 1.05;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: 12px;
+    font-size: 36px;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
   }
 
   .hero__sub {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.65;
     max-width: 52ch;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 18px;
+    gap: 10px;
+    margin-bottom: 14px;
   }
 
   .hero__nudge {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 13px;
+    gap: 6px;
+    font-size: 12px;
     color: var(--color-text-secondary);
   }
 
   .hero__pulse {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
     background: var(--color-accent);
     box-shadow: 0 0 0 0 rgba(239, 159, 39, 0.55);
     animation: heroPulse 1.8s ease-out infinite;
@@ -144,32 +162,98 @@
 
   .hero__media-frame {
     position: relative;
-    border-radius: var(--radius-lg);
+    border-radius: 14px;
     overflow: hidden;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--color-page-bg);
+    border: 0.5px solid var(--color-border);
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero__media-frame img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    min-height: 260px;
+    object-fit: cover;
     display: block;
     transition: transform 700ms ease;
   }
 
   .hero__media-frame:hover img {
-    transform: scale(1.03);
-  }
-
-  .hero__placeholder {
-    aspect-ratio: 4 / 3;
-    background: linear-gradient(135deg, var(--color-surface), #fff);
+    transform: scale(1.05);
   }
 
   .hero__badge {
     position: absolute;
     top: 14px;
     right: 14px;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    z-index: 1;
+  }
+
+  .hero__image-placeholder {
+    position: relative;
+    width: 100%;
+    min-height: 220px;
+    padding: 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-page-bg) 100%);
+  }
+
+  .hero__float-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--color-announcement-bg);
+    color: var(--color-accent-dark);
+  }
+
+  .hero__books {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .hero__book {
+    width: 44px;
+    border-radius: 3px;
+    border: 0.5px solid #e5e5e5;
+    flex-shrink: 0;
+  }
+
+  .hero__book-label {
+    font-size: 11px;
+    margin-top: 10px;
+    color: var(--color-text-secondary);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .hero.section {
+      padding-block: 32px;
+    }
+
+    .hero__grid {
+      gap: 24px;
+    }
+
+    .hero__title {
+      font-size: 28px;
+    }
   }
 
   .hero__grid--full_width_image .hero__media {

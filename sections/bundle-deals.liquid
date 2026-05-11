@@ -1,4 +1,4 @@
-<section class="section bundle-deals" data-bundle-deals data-discount-prefix="{{ section.settings.discount_code_prefix | escape }}" {{ section.shopify_attributes }}>
+<section class="section bundle-deals surface-muted" data-bundle-deals data-discount-prefix="{{ section.settings.discount_code_prefix | escape }}" {{ section.shopify_attributes }}>
   <div class="container">
     <header class="section__header">
       {%- if section.settings.section_label != blank -%}
@@ -24,6 +24,8 @@
                 <span class="bundle-tier__ribbon">{{ 'sections.bundle_deals.most_popular' | t }}</span>
               {%- endif -%}
 
+              <div class="bundle-tier__icon" aria-hidden="true"></div>
+
               <div class="bundle-tier__qty">{{ block.settings.tier_title }}</div>
               <div class="bundle-tier__save">{{ block.settings.tier_save_label }}</div>
               <div class="bundle-tier__price text-secondary">{{ block.settings.tier_from_price }}</div>
@@ -48,58 +50,79 @@
 {% stylesheet %}
   .bundle-deals__grid {
     display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  @media (min-width: 990px) {
+  @media (max-width: 768px) {
     .bundle-deals__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   .bundle-tier {
     position: relative;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 16px;
+    border: 0.5px solid var(--color-border);
+    border-radius: 12px;
+    padding: 18px 14px;
     display: grid;
-    gap: 10px;
+    gap: 6px;
     background: var(--color-page-bg);
+    text-align: center;
   }
 
   .bundle-tier--featured {
-    border: 2px solid var(--color-accent);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    border-width: 2px;
+    border-color: var(--color-accent);
   }
 
   .bundle-tier__ribbon {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
+    display: inline-block;
+    margin: 0 auto 10px;
     background: var(--color-accent);
     color: var(--color-accent-dark);
-    font-size: 11px;
-    font-weight: 800;
-    padding: 6px 10px;
-    border-radius: var(--radius-pill);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
     white-space: nowrap;
+    justify-self: center;
+  }
+
+  .bundle-tier__icon {
+    width: 22px;
+    height: 22px;
+    margin: 0 auto 10px;
+    border-radius: 6px;
+    border: 0.5px dashed var(--color-border);
+    opacity: 0.5;
   }
 
   .bundle-tier__qty {
-    font-weight: 800;
-    font-size: 16px;
-    margin-top: 8px;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 4px;
   }
 
   .bundle-tier__save {
     color: var(--color-accent-dark);
-    font-weight: 700;
+    font-weight: 500;
+    font-size: 11px;
+    margin-bottom: 10px;
   }
 
   .bundle-tier__price {
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .bundle-tier .btn {
+    width: 100%;
+    border-radius: 10px;
+    padding: 9px;
+    font-size: 12px;
+    font-weight: 500;
   }
 {% endstylesheet %}
 

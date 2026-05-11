@@ -13,8 +13,9 @@
       {%- endif -%}
     </header>
 
-    <div class="email-capture__form">
-      {% form 'customer', class: 'email-capture__inner' %}
+    <div class="email-capture__shell">
+      <div class="email-capture__form">
+        {% form 'customer', class: 'email-capture__inner' %}
         <input type="hidden" name="contact[tags]" value="newsletter, booklify">
 
         <label class="visually-hidden" for="EmailCapture-{{ section.id }}">{{ section.settings.input_placeholder }}</label>
@@ -39,50 +40,97 @@
         {%- if form.errors -%}
           <p class="text-danger" role="alert">{{ form.errors | default_errors }}</p>
         {%- endif -%}
-      {% endform %}
+        {% endform %}
 
-      {%- if section.settings.privacy_text != blank -%}
-        <p class="email-capture__privacy text-muted">{{ section.settings.privacy_text }}</p>
-      {%- endif -%}
+        {%- if section.settings.privacy_text != blank -%}
+          <p class="email-capture__privacy text-muted">{{ section.settings.privacy_text }}</p>
+        {%- endif -%}
 
-      {%- if section.settings.klaviyo_list_id != blank -%}
-        <p class="text-muted" data-klaviyo-list-id="{{ section.settings.klaviyo_list_id | escape }}">
-          {{ 'sections.email_capture.klaviyo_note' | t }}
-        </p>
-      {%- endif -%}
+        {%- if section.settings.klaviyo_list_id != blank -%}
+          <p class="text-muted" data-klaviyo-list-id="{{ section.settings.klaviyo_list_id | escape }}">
+            {{ 'sections.email_capture.klaviyo_note' | t }}
+          </p>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
+  .email-capture .section__header {
+    text-align: center;
+  }
+
+  .email-capture .section__subheading {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-inline: auto;
+  }
+
+  .email-capture__shell {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .email-capture__form {
+    text-align: center;
+  }
+
   .email-capture__inner {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    grid-template-columns: 1fr;
+    align-items: stretch;
+    justify-content: center;
   }
 
   @media (min-width: 750px) {
     .email-capture__inner {
-      grid-template-columns: 1fr auto;
-      align-items: center;
+      flex-wrap: nowrap;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .email-capture__inner {
+      flex-direction: column;
+    }
+
+    .email-capture__inner .btn {
+      width: 100%;
     }
   }
 
   .email-capture__inner input[type='email'] {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--color-border);
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 0.5px solid var(--color-border);
     background: var(--color-page-bg);
+    font-size: 14px;
+    font-weight: 400;
+    box-sizing: border-box;
+  }
+
+  .email-capture__inner .btn {
+    height: 44px;
+    padding: 0 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 10px;
+    box-sizing: border-box;
   }
 
   .email-capture__privacy {
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 11px;
+    text-align: center;
   }
 
   .email-capture__success {
     margin-top: 10px;
+    text-align: center;
   }
 {% endstylesheet %}
 

@@ -16,7 +16,7 @@
     "container_max_width": 1200,
     "page_padding": 24,
     "enable_urgency": true,
-    "sale_end_datetime": "",
+    "sale_end_datetime": "2099-12-31T23:59:59",
     "selling_fast_threshold": 20,
     "free_shipping_threshold": "35",
     "shipping_cutoff_time": "2PM",

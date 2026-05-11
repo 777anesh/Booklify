@@ -15,6 +15,8 @@
     <a class="visually-hidden" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
     {% sections 'header-group' %}
+    {% comment %} Category strip sits directly below the site header (see sections/header.liquid for `</header>`). {% endcomment %}
+    {% section 'category-strip' %}
 
     <main id="MainContent" role="main" tabindex="-1">
       {{ content_for_layout }}

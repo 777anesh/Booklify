@@ -13,12 +13,12 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'item' -%}
-            <details class="faq__item" {{ block.shopify_attributes }}>
-              <summary class="faq__summary">
+            <details class="faq__item faq-item" {{ block.shopify_attributes }}>
+              <summary class="faq__summary faq-item__question">
                 <span>{{ block.settings.question }}</span>
-                <span class="faq__chev" aria-hidden="true">+</span>
+                <span class="faq__chev faq-item__icon" aria-hidden="true">▾</span>
               </summary>
-              <div class="faq__answer rte">{{ block.settings.answer }}</div>
+              <div class="faq__answer faq-item__answer rte">{{ block.settings.answer }}</div>
             </details>
         {%- endcase -%}
       {%- endfor -%}
@@ -55,42 +55,55 @@
 <script src="{{ 'section-faq.js' | asset_url }}" defer></script>
 
 {% stylesheet %}
-  .faq__item {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 12px 14px;
-    background: var(--color-page-bg);
-    margin-bottom: 10px;
+  .faq__list {
+    border-top: 0.5px solid var(--color-border);
   }
 
-  .faq__summary {
+  .faq__item,
+  .faq-item {
+    border-bottom: 0.5px solid var(--color-border);
+    padding: 16px 0;
+    background: transparent;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .faq__summary,
+  .faq-item__question {
     cursor: pointer;
     list-style: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    font-weight: 650;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   .faq__summary::-webkit-details-marker {
     display: none;
   }
 
-  .faq__chev {
-    font-weight: 800;
+  .faq__chev,
+  .faq-item__icon {
+    font-weight: 500;
+    font-size: 14px;
+    flex-shrink: 0;
     color: var(--color-text-muted);
-    transition: transform var(--transition-fast);
+    transition: transform 0.2s ease;
+    line-height: 1;
   }
 
   .faq__item[open] .faq__chev {
-    transform: rotate(45deg);
+    transform: rotate(180deg);
   }
 
-  .faq__answer {
+  .faq__answer,
+  .faq-item__answer {
     padding-top: 10px;
     color: var(--color-text-secondary);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 400;
     line-height: 1.65;
   }
 {% endstylesheet %}

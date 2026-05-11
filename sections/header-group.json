@@ -14,17 +14,10 @@
       "type": "header",
       "settings": {
         "logo_text": "Booklify",
-        "enable_sticky_header": true
-      }
-    },
-    "category_strip": {
-      "type": "category-strip",
-      "settings": {
-        "strip_label": "Browse categories",
-        "enable_sticky": true,
-        "show_item_count": false
+        "enable_sticky_header": true,
+        "menu": "main-menu"
       }
     }
   },
-  "order": ["announcement", "header", "category_strip"]
+  "order": ["announcement", "header"]
 }

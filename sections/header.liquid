@@ -1,5 +1,9 @@
 {%- liquid
   assign logo_text = section.settings.logo_text | default: settings.brand_name
+  assign nav_menu = section.settings.menu
+  if nav_menu == blank or nav_menu.links.size == 0
+    assign nav_menu = linklists['main-menu']
+  endif
 -%}
 
 <header
@@ -8,7 +12,7 @@
   data-enable-sticky="{{ section.settings.enable_sticky_header }}"
   {{ section.shopify_attributes }}
 >
-  <div class="site-header__inner container">
+  <div class="site-header__inner">
     <button type="button" class="site-header__icon site-header__icon--menu" data-open-nav aria-label="{{ 'general.accessibility.open_menu' | t }}">
       {% render 'icon-menu' %}
     </button>
@@ -22,15 +26,33 @@
     </a>
 
     <nav class="site-header__nav" aria-label="{{ 'general.accessibility.main_navigation' | t }}">
-      {%- if section.settings.menu != blank -%}
+      {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
         <ul class="site-header__menu">
-          {%- for link in section.settings.menu.links -%}
+          {%- for link in nav_menu.links -%}
             <li>
               <a href="{{ link.url }}" class="site-header__menu-link{% if link.active %} is-active{% endif %}">
                 {{ link.title }}
               </a>
             </li>
           {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <ul class="site-header__menu">
+          <li>
+            <a href="{{ routes.all_products_collection_url }}" class="site-header__menu-link">{{ 'sections.header.fallback.bestsellers' | t }}</a>
+          </li>
+          <li>
+            <a href="{{ routes.all_products_collection_url }}" class="site-header__menu-link">{{ 'sections.header.fallback.new_arrivals' | t }}</a>
+          </li>
+          <li>
+            <a href="{{ routes.all_products_collection_url }}" class="site-header__menu-link">{{ 'sections.header.fallback.bundles' | t }}</a>
+          </li>
+          <li>
+            <a href="{{ routes.collections_url }}" class="site-header__menu-link">{{ 'sections.header.fallback.genres' | t }}</a>
+          </li>
+          <li>
+            <a href="{{ routes.all_products_collection_url }}" class="site-header__menu-link">{{ 'sections.header.fallback.deals' | t }}</a>
+          </li>
         </ul>
       {%- endif -%}
     </nav>
@@ -55,13 +77,21 @@
           {% render 'icon-close' %}
         </button>
       </div>
-      {%- if section.settings.menu != blank -%}
+      {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
         <ul class="site-header__dialog-menu">
-          {%- for link in section.settings.menu.links -%}
+          {%- for link in nav_menu.links -%}
             <li>
               <a href="{{ link.url }}">{{ link.title }}</a>
             </li>
           {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <ul class="site-header__dialog-menu">
+          <li><a href="{{ routes.all_products_collection_url }}">{{ 'sections.header.fallback.bestsellers' | t }}</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">{{ 'sections.header.fallback.new_arrivals' | t }}</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">{{ 'sections.header.fallback.bundles' | t }}</a></li>
+          <li><a href="{{ routes.collections_url }}">{{ 'sections.header.fallback.genres' | t }}</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">{{ 'sections.header.fallback.deals' | t }}</a></li>
         </ul>
       {%- endif -%}
     </div>
@@ -88,7 +118,7 @@
     top: 0;
     z-index: 110;
     background: var(--color-page-bg);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 0.5px solid var(--color-border);
     transition: box-shadow var(--transition-base), transform var(--transition-base);
   }
 
@@ -101,7 +131,9 @@
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 16px;
+    height: var(--header-height);
     min-height: var(--header-height);
+    max-height: var(--header-height);
   }
 
   .site-header__logo {
@@ -117,7 +149,7 @@
   }
 
   .site-header__logo-text {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 20px;
     letter-spacing: -0.02em;
   }
@@ -129,7 +161,7 @@
   .site-header__menu {
     list-style: none;
     display: flex;
-    gap: 18px;
+    gap: 24px;
     padding: 0;
     margin: 0;
   }
@@ -137,23 +169,22 @@
   .site-header__menu-link {
     text-decoration: none;
     color: var(--color-text-secondary);
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 400;
     padding: 8px 0;
-    border-bottom: 2px solid transparent;
+    border-bottom: 0;
   }
 
   .site-header__menu-link:hover,
   .site-header__menu-link.is-active {
     color: var(--color-text-primary);
-    border-color: var(--color-cta-bg);
   }
 
   .site-header__actions {
     justify-self: end;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
   }
 
   .site-header__icon {
@@ -182,14 +213,14 @@
     position: absolute;
     top: 4px;
     right: 2px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 999px;
+    min-width: 16px;
+    height: 16px;
+    padding: 1px 7px;
+    border-radius: 10px;
     background: var(--color-cta-bg);
     color: var(--color-cta-text);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 500;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -273,7 +304,7 @@
     text-decoration: none;
     color: inherit;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .site-header__search-panel {

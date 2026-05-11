@@ -5,18 +5,23 @@
 <section class="section bestseller-grid" {{ section.shopify_attributes }}>
   <div class="container">
     <header class="section__header">
+      {%- assign label_trim = section.settings.section_label | strip -%}
+      {%- assign label_lower = label_trim | downcase -%}
+      {%- if label_trim != blank and label_lower != 'none' -%}
+        <p class="section__label">{{ label_trim }}</p>
+      {%- endif -%}
       {%- if section.settings.section_heading != blank -%}
         <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
       {%- endif -%}
     </header>
 
-    {%- if coll != blank -%}
-      {%- assign col_class = 'grid-4' -%}
-      {%- if section.settings.columns_desktop == '3' -%}
-        {%- assign col_class = 'bestseller-grid--3' -%}
-      {%- endif -%}
+    {%- assign col_class = 'bestseller-grid__grid' -%}
+    {%- if section.settings.columns_desktop == '3' -%}
+      {%- assign col_class = 'bestseller-grid__grid bestseller-grid--3' -%}
+    {%- endif -%}
 
-      <div class="{{ col_class }} bestseller-grid__grid">
+    {%- if coll != blank and coll.products_count > 0 -%}
+      <div class="{{ col_class }}">
         {%- for product in coll.products limit: section.settings.products_to_show -%}
           <div>
             {% render 'product-card',
@@ -29,7 +34,11 @@
         {%- endfor -%}
       </div>
     {%- else -%}
-      <p class="text-secondary">{{ 'sections.onboarding.collection' | t }}</p>
+      <div class="bestseller-grid__grid bestseller-grid__grid--skeleton" aria-hidden="true">
+        {%- for i in (1..8) -%}
+          <div class="bestseller-skeleton"></div>
+        {%- endfor -%}
+      </div>
     {%- endif -%}
   </div>
 </section>
@@ -41,14 +50,21 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (min-width: 990px) {
+  @media (min-width: 901px) {
     .bestseller-grid__grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .bestseller-grid--3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
+
+  .bestseller-skeleton {
+    min-height: 280px;
+    border-radius: 10px;
+    border: 0.5px solid var(--color-border);
+    background: var(--color-surface);
   }
 {% endstylesheet %}
 
@@ -56,6 +72,13 @@
 {
   "name": "t:sections.bestseller_grid.name",
   "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.bestseller_grid.settings.label.label",
+      "default": "none",
+      "info": "Eyebrow above the heading. Use the word \"none\" (default) to hide this line, or enter your own label."
+    },
     {
       "type": "text",
       "id": "section_heading",

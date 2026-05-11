@@ -90,7 +90,10 @@
         "logo_text": { "label": "Logo text" },
         "logo_max_width": { "label": "Logo max width" },
         "sticky": { "label": "Enable sticky header" },
-        "menu": { "label": "Menu" }
+        "menu": {
+          "label": "Menu",
+          "info": "Use the main-menu link list. Suggested items: Bestsellers, New arrivals, Bundles, Genres (link to /collections), Deals."
+        }
       }
     },
     "announcement_bar": {
@@ -200,6 +203,25 @@
         }
       }
     },
+    "collection_grid": {
+      "name": "Collection grid",
+      "presets": { "name": "Collection grid" },
+      "settings": {
+        "label": { "label": "Eyebrow" },
+        "heading": { "label": "Heading" },
+        "subheading": { "label": "Subheading" }
+      },
+      "blocks": {
+        "card": {
+          "name": "Collection card",
+          "settings": {
+            "collection_label": { "label": "Title" },
+            "collection_count": { "label": "Subtitle (e.g. 142 titles)" },
+            "collection_url": { "label": "Link" }
+          }
+        }
+      }
+    },
     "bundle_deals": {
       "name": "Bundle deals",
       "presets": { "name": "Bundle deals" },
@@ -246,6 +268,7 @@
       "name": "Bestseller grid",
       "presets": { "name": "Bestseller grid" },
       "settings": {
+        "label": { "label": "Eyebrow label" },
         "heading": { "label": "Heading" },
         "collection": { "label": "Collection" },
         "limit": { "label": "Products to show" },

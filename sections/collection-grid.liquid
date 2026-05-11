@@ -1,0 +1,163 @@
+<section class="section collection-grid" {{ section.shopify_attributes }}>
+  <div class="container">
+    <header class="section__header">
+      {%- if section.settings.section_label != blank -%}
+        <p class="section__label">{{ section.settings.section_label }}</p>
+      {%- endif -%}
+      {%- if section.settings.section_heading != blank -%}
+        <h2 class="section__heading">{{ section.settings.section_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.section_subheading != blank -%}
+        <p class="section__subheading">{{ section.settings.section_subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="collection-grid__grid">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'card' -%}
+            {%- liquid
+              assign card_url = block.settings.collection_url
+              if card_url == blank
+                assign card_url = '#'
+              endif
+            -%}
+            <a class="collection-grid__card" href="{{ card_url }}" {{ block.shopify_attributes }}>
+              <div class="collection-grid__media" aria-hidden="true">
+                <div class="collection-grid__media-placeholder"></div>
+              </div>
+              <div class="collection-grid__body">
+                <div class="collection-grid__title">{{ block.settings.collection_label | escape }}</div>
+                <div class="collection-grid__meta text-muted">{{ block.settings.collection_count | escape }}</div>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .collection-grid__grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  @media (max-width: 768px) {
+    .collection-grid__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .collection-grid__card {
+    text-decoration: none;
+    color: inherit;
+    border: 0.5px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .collection-grid__media {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .collection-grid__media-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 80px;
+    background: var(--color-surface);
+    opacity: 0.75;
+  }
+
+  .collection-grid__body {
+    padding: 9px 12px;
+    border-top: 0.5px solid var(--color-border);
+  }
+
+  .collection-grid__title {
+    font-weight: 500;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .collection-grid__meta {
+    font-size: 11px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.collection_grid.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "t:sections.collection_grid.settings.label.label",
+      "default": "Browse by type"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "t:sections.collection_grid.settings.heading.label",
+      "default": "Explore the collections"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "t:sections.collection_grid.settings.subheading.label",
+      "default": "Pick a category and start building your next read stack."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "t:sections.collection_grid.blocks.card.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "collection_label",
+          "label": "t:sections.collection_grid.blocks.card.settings.collection_label.label",
+          "default": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "collection_count",
+          "label": "t:sections.collection_grid.blocks.card.settings.collection_count.label",
+          "default": "0 titles"
+        },
+        {
+          "type": "url",
+          "id": "collection_url",
+          "label": "t:sections.collection_grid.blocks.card.settings.collection_url.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.collection_grid.presets.name",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" }
+      ]
+    }
+  ]
+}
+{% endschema %}

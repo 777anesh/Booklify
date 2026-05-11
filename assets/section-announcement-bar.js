@@ -57,6 +57,12 @@
         }
         return;
       }
+      // Far-future end dates (e.g. theme default "no sale") are not meaningful for a countdown.
+      const maxCountdownMs = 45 * 24 * 60 * 60 * 1000;
+      if (remaining > maxCountdownMs) {
+        timerEl.hidden = true;
+        return;
+      }
       timerEl.hidden = false;
       timerEl.textContent = formatCountdown(remaining);
     }

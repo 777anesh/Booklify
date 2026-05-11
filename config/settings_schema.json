@@ -127,8 +127,8 @@
         "type": "text",
         "id": "sale_end_datetime",
         "label": "Sale end date/time (ISO 8601)",
-        "default": "",
-        "info": "Example: 2026-12-31T23:59:59-05:00. Used when a section does not override the date."
+        "default": "2099-12-31T23:59:59",
+        "info": "Example: 2026-12-31T23:59:59-05:00. Used when a section does not override the date. Far-future default means no sale end until you set a real date."
       },
       {
         "type": "number",

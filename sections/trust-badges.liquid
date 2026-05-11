@@ -1,18 +1,18 @@
-<section class="section trust-badges surface-muted" {{ section.shopify_attributes }}>
+<section class="section section--tight trust-badges surface-muted" {{ section.shopify_attributes }}>
   <div class="container">
     <div class="trust-badges__grid">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'item' -%}
-            <div class="trust-badges__item text-center" {{ block.shopify_attributes }}>
-              <div class="trust-badges__icon" aria-hidden="true">
-                {% render 'icon-trust', name: block.settings.badge_icon %}
-              </div>
-              <div class="trust-badges__title">{{ block.settings.badge_title }}</div>
-              <div class="trust-badges__subtitle text-secondary">{{ block.settings.badge_subtitle }}</div>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'item' -%}
+          <div class="trust-badges__item trust-item text-center" {{ block.shopify_attributes }}>
+            <div class="trust-badges__icon trust-item__icon" aria-hidden="true">
+              {% render 'icon-trust', name: block.settings.badge_icon %}
             </div>
-        {%- endcase -%}
-      {%- endfor -%}
+            <div class="trust-badges__title trust-item__title">{{ block.settings.badge_title }}</div>
+            <div class="trust-badges__subtitle trust-item__subtitle text-secondary">{{ block.settings.badge_subtitle }}</div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
     </div>
   </div>
 </section>
@@ -21,34 +21,53 @@
   .trust-badges__grid {
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 24px 0;
   }
 
-  @media (min-width: 990px) {
-    .trust-badges__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+  .trust-badges__item,
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 0;
   }
 
-  .trust-badges__item {
-    padding: 16px 10px;
-  }
-
-  .trust-badges__icon {
+  .trust-badges__icon,
+  .trust-item__icon {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    font-size: 22px;
     color: var(--color-accent-dark);
   }
 
-  .trust-badges__title {
-    font-weight: 700;
-    margin-bottom: 6px;
+  .trust-badges__icon svg,
+  .trust-item__icon svg {
+    width: 22px;
+    height: 22px;
   }
 
-  .trust-badges__subtitle {
+  .trust-badges__title,
+  .trust-item__title {
+    font-weight: 500;
     font-size: 13px;
-    line-height: 1.5;
+    margin: 0;
+  }
+
+  .trust-badges__subtitle,
+  .trust-item__subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 768px) {
+    .trust-badges__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      padding: 20px 0;
+    }
   }
 {% endstylesheet %}
 

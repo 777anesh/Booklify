@@ -5,7 +5,7 @@
         {%- case block.type -%}
           {%- when 'step' -%}
             <div class="how-step" {{ block.shopify_attributes }}>
-              <div class="how-step__number text-muted">{{ block.settings.step_number }}</div>
+              <div class="how-step__number">{{ block.settings.step_number }}</div>
               <div class="how-step__icon" aria-hidden="true">
                 {% render 'icon-trust', name: block.settings.step_icon %}
               </div>
@@ -21,43 +21,58 @@
 {% stylesheet %}
   .how-it-works__grid {
     display: grid;
-    gap: 18px;
+    gap: 32px;
     grid-template-columns: 1fr;
   }
 
-  @media (min-width: 990px) {
+  @media (min-width: 769px) {
     .how-it-works__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
   .how-step {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: 18px;
-    background: var(--color-page-bg);
+    padding: 0;
+    background: transparent;
   }
 
   .how-step__number {
-    font-size: 34px;
-    font-weight: 800;
+    font-size: 32px;
+    font-weight: 500;
     line-height: 1;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    opacity: 0.12;
+    color: var(--color-text-primary);
   }
 
   .how-step__icon {
     color: var(--color-accent-dark);
     margin-bottom: 10px;
+    font-size: 24px;
+    display: block;
+  }
+
+  .how-step__icon svg {
+    width: 24px;
+    height: 24px;
   }
 
   .how-step__title {
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
   }
 
   .how-step__body {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 400;
     line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .how-it-works__grid {
+      gap: 24px;
+    }
   }
 {% endstylesheet %}
 

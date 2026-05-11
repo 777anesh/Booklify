@@ -1,21 +1,23 @@
-<section class="section stats-strip surface-muted" data-stats-strip {{ section.shopify_attributes }}>
+<section class="section section--tight stats-strip surface-muted" data-stats-strip {{ section.shopify_attributes }}>
   <div class="container">
     <div class="stats-strip__grid">
-      {%- for i in (1..4) -%}
-        {%- capture stat_num -%}stat_{{ i }}_number{%- endcapture -%}
-        {%- capture stat_label -%}stat_{{ i }}_label{%- endcapture -%}
-        {%- capture stat_icon -%}stat_{{ i }}_icon{%- endcapture -%}
-        {%- assign num = section.settings[stat_num] -%}
-        {%- assign label = section.settings[stat_label] -%}
-        {%- assign icon = section.settings[stat_icon] -%}
-        <div class="stats-strip__item text-center">
-          <div class="stats-strip__icon" aria-hidden="true">
+    {%- for i in (1..4) -%}
+      {%- capture stat_num -%}stat_{{ i }}_number{%- endcapture -%}
+      {%- capture stat_label -%}stat_{{ i }}_label{%- endcapture -%}
+      {%- capture stat_icon -%}stat_{{ i }}_icon{%- endcapture -%}
+      {%- assign num = section.settings[stat_num] -%}
+      {%- assign label = section.settings[stat_label] -%}
+      {%- assign icon = section.settings[stat_icon] -%}
+      <div class="stats-strip__item text-center">
+        <div class="stats-strip__number">{{ num }}</div>
+        <div class="stats-strip__label text-secondary">
+          <span class="stats-strip__icon" aria-hidden="true">
             {% render 'icon-stat', name: icon %}
-          </div>
-          <div class="stats-strip__number">{{ num }}</div>
-          <div class="stats-strip__label text-secondary">{{ label }}</div>
+          </span>
+          <span>{{ label }}</span>
         </div>
-      {%- endfor -%}
+      </div>
+    {%- endfor -%}
     </div>
   </div>
 </section>
@@ -24,37 +26,49 @@
   .stats-strip__grid {
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @media (min-width: 990px) {
-    .stats-strip__grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 20px 0;
   }
 
   .stats-strip__item {
-    padding: 18px 10px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-surface);
+    text-align: center;
   }
 
   .stats-strip__icon {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
     color: var(--color-accent-dark);
   }
 
+  .stats-strip__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
   .stats-strip__number {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 3px;
   }
 
   .stats-strip__label {
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 400;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .stats-strip__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding: 16px 0;
+    }
   }
 {% endstylesheet %}
 

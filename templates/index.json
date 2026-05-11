@@ -11,51 +11,183 @@
       "settings": {}
     },
     "collection_showcase": {
-      "type": "collection-showcase",
+      "type": "collection-grid",
       "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "cg_1": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Original Edition",
+            "collection_count": "142 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_2": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Little Books",
+            "collection_count": "86 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_3": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Coffee Tables",
+            "collection_count": "58 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_4": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Comics",
+            "collection_count": "203 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_5": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Limited Sets",
+            "collection_count": "34 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_6": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Box Sets",
+            "collection_count": "71 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_7": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Signed Editions",
+            "collection_count": "19 titles",
+            "collection_url": "/collections/all"
+          }
+        },
+        "cg_8": {
+          "type": "card",
+          "settings": {
+            "collection_label": "Bestsellers",
+            "collection_count": "top 100",
+            "collection_url": "/collections/all"
+          }
+        }
+      },
+      "block_order": ["cg_1", "cg_2", "cg_3", "cg_4", "cg_5", "cg_6", "cg_7", "cg_8"]
     },
     "bundle_deals": {
       "type": "bundle-deals",
       "settings": {
         "discount_code_prefix": ""
       },
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "bt_1": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 1,
+            "tier_title": "Buy any 1",
+            "tier_save_label": "Save 10%",
+            "tier_from_price": "From $12.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": "/collections/all"
+          }
+        },
+        "bt_2": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 2,
+            "tier_title": "Buy any 2",
+            "tier_save_label": "Save 25%",
+            "tier_from_price": "From $22.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": "/collections/all"
+          }
+        },
+        "bt_3": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 3,
+            "tier_title": "Buy any 3",
+            "tier_save_label": "Save 40%",
+            "tier_from_price": "From $26.99",
+            "tier_is_featured": true,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": "/collections/all"
+          }
+        },
+        "bt_4": {
+          "type": "tier",
+          "settings": {
+            "tier_quantity": 5,
+            "tier_title": "Buy any 5",
+            "tier_save_label": "Save 50%",
+            "tier_from_price": "From $39.99",
+            "tier_is_featured": false,
+            "tier_cta_text": "Choose",
+            "tier_cta_url": "/collections/all"
+          }
+        }
+      },
+      "block_order": ["bt_1", "bt_2", "bt_3", "bt_4"]
     },
     "how_it_works": {
       "type": "how-it-works",
       "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "hi_1": { "type": "step", "settings": {} },
+        "hi_2": { "type": "step", "settings": {} },
+        "hi_3": { "type": "step", "settings": {} }
+      },
+      "block_order": ["hi_1", "hi_2", "hi_3"]
     },
     "bestsellers": {
       "type": "bestseller-grid",
       "settings": {
         "columns_desktop": "4",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "collection": "all"
       }
     },
     "trust": {
       "type": "trust-badges",
       "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "tb_1": { "type": "item", "settings": {} },
+        "tb_2": { "type": "item", "settings": {} },
+        "tb_3": { "type": "item", "settings": {} },
+        "tb_4": { "type": "item", "settings": {} }
+      },
+      "block_order": ["tb_1", "tb_2", "tb_3", "tb_4"]
     },
     "reviews": {
       "type": "reviews",
       "settings": {
         "layout_mode": "default"
       },
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "rv_1": { "type": "review", "settings": {} },
+        "rv_2": { "type": "review", "settings": {} },
+        "rv_3": { "type": "review", "settings": {} }
+      },
+      "block_order": ["rv_1", "rv_2", "rv_3"]
     },
     "faq": {
       "type": "faq",
       "settings": {},
-      "blocks": {},
-      "block_order": []
+      "blocks": {
+        "fq_1": { "type": "item", "settings": {} },
+        "fq_2": { "type": "item", "settings": {} },
+        "fq_3": { "type": "item", "settings": {} }
+      },
+      "block_order": ["fq_1", "fq_2", "fq_3"]
     },
     "featured": {
       "type": "featured-product",

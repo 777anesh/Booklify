@@ -28,7 +28,7 @@
     {%- endfor -%}
   </div>
 
-  <p class="review-card__quote">“{{ review_text }}”</p>
+  <p class="review-card__body review-card__quote">“{{ review_text }}”</p>
 
   <div class="review-card__meta text-secondary">
     <span class="review-card__name">{{ reviewer_name }}</span>
@@ -52,12 +52,12 @@
 
 {% stylesheet %}
   .review-card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    border: 0.5px solid var(--color-border);
+    border-radius: 12px;
     padding: 16px;
     background: var(--color-page-bg);
     display: grid;
-    gap: 10px;
+    gap: 6px;
     height: 100%;
   }
 
@@ -65,21 +65,24 @@
     color: var(--color-accent);
     letter-spacing: 1px;
     font-size: 13px;
+    margin-bottom: 6px;
   }
 
+  .review-card__body,
   .review-card__quote {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.55;
     font-style: italic;
     color: var(--color-text-primary);
+    margin: 6px 0 10px;
   }
 
   .review-card__meta {
-    font-size: 13px;
+    font-size: 11px;
   }
 
   .review-card__name {
-    font-weight: 700;
+    font-weight: 500;
     color: var(--color-text-primary);
   }
 

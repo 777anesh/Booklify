@@ -1,34 +1,33 @@
 {%- liquid
   assign menu = section.settings.category_menu
+  if menu == blank or menu.links.size == 0
+    assign menu = linklists['category-navigation']
+  endif
+  if menu == blank or menu.links.size == 0
+    assign menu = linklists['main-menu']
+  endif
 -%}
 
 {%- if menu != blank and menu.links.size > 0 -%}
   <nav
-    class="category-strip{% if section.settings.enable_sticky %} category-strip--sticky{% endif %}"
-    aria-label="{{ section.settings.strip_label }}"
+    class="category-strip category-strip--sticky"
+    aria-label="Browse by category"
     data-category-strip
     {{ section.shopify_attributes }}
   >
-    <div class="category-strip__inner">
-      {%- for link in menu.links -%}
+    <div class="container category-strip__inner">
+      {% for link in menu.links %}
         <a
           href="{{ link.url }}"
           class="category-strip__item{% if link.active %} category-strip__item--active{% endif %}"
-          {% if link.active %}
-            aria-current="page"
-          {% endif %}
+          aria-current="{% if link.active %}page{% else %}false{% endif %}"
         >
-          {{- link.title -}}
-          {%- if section.settings.show_item_count -%}
-            {%- if link.type == 'collection_link' and link.object -%}
-              <span class="category-strip__count">({{ link.object.products_count }})</span>
-            {%- endif -%}
-          {%- endif -%}
+          {{ link.title }}
         </a>
-        {%- unless forloop.last -%}
+        {% unless forloop.last %}
           <span class="category-strip__sep" aria-hidden="true">|</span>
-        {%- endunless -%}
-      {%- endfor -%}
+        {% endunless %}
+      {% endfor %}
     </div>
   </nav>
 
@@ -37,7 +36,11 @@
 
 {% stylesheet %}
   .category-strip {
-    border-bottom: 1px solid var(--color-border);
+    height: 40px;
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    border-bottom: 0.5px solid var(--color-border);
     background: var(--color-page-bg);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -50,22 +53,24 @@
 
   .category-strip--sticky {
     position: sticky;
-    z-index: 100;
+    z-index: 99;
     top: var(--header-height);
   }
 
   .category-strip__inner {
     display: flex;
     align-items: stretch;
-    padding: 0 var(--container-padding);
     white-space: nowrap;
-    max-width: var(--container-max);
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
   }
 
   .category-strip__item {
-    padding: 10px 14px;
-    font-size: 13px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--color-text-secondary);
     text-decoration: none;
@@ -77,55 +82,34 @@
   .category-strip__item:hover,
   .category-strip__item--active {
     color: var(--color-text-primary);
-    border-bottom-color: var(--color-cta-bg);
+    border-bottom-color: currentColor;
   }
 
   .category-strip__sep {
-    color: var(--color-border);
-    padding: 10px 2px;
+    display: flex;
+    align-items: center;
     font-size: 12px;
-    align-self: center;
+    opacity: 0.3;
+    padding: 0 2px;
     user-select: none;
+    color: var(--color-text-secondary);
   }
 
-  .category-strip__count {
-    font-size: 11px;
-    color: var(--color-text-muted);
-    margin-left: 3px;
+  @media (max-width: 768px) {
+    .category-strip {
+      padding: 0;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:sections.category_strip.name",
+  "name": "Category strip",
   "settings": [
-    {
-      "type": "text",
-      "id": "strip_label",
-      "label": "t:sections.category_strip.settings.label.label",
-      "default": "Browse categories"
-    },
     {
       "type": "link_list",
       "id": "category_menu",
-      "label": "t:sections.category_strip.settings.menu.label"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky",
-      "label": "t:sections.category_strip.settings.sticky.label",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_item_count",
-      "label": "t:sections.category_strip.settings.count.label",
-      "default": false
-    }
-  ],
-  "presets": [
-    {
-      "name": "t:sections.category_strip.presets.name"
+      "label": "Category menu"
     }
   ]
 }

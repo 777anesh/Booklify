@@ -110,6 +110,18 @@
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
   "sections": {
+    "hero": {
+      "explore_bestsellers": "Explore bestsellers"
+    },
+    "header": {
+      "fallback": {
+        "bestsellers": "Bestsellers",
+        "new_arrivals": "New arrivals",
+        "bundles": "Bundles",
+        "genres": "Genres",
+        "deals": "Deals"
+      }
+    },
     "onboarding": {
       "collection": "Select a collection in the theme editor to show products.",
       "collection_cards": "Add collection cards to this section.",
