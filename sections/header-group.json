@@ -35,7 +35,7 @@
         "logo_text": "Booklify",
         "logo_max_width": 140,
         "enable_sticky_header": true,
-        "menu": ""
+        "menu": "main-menu"
       }
     },
     "category_strip": {
